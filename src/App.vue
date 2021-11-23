@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <LowCodeTable :data="tableData" :schema="tableSchema" stripe />
+    <LowCodeTable
+      :data="tableData"
+      :schema="tableSchema"
+      emptyText="111"
+      maxHeight="400"
+      :pagination="pagination"
+    />
   </div>
 </template>
 
@@ -11,37 +17,36 @@ export default {
   components: {
     LowCodeTable,
   },
+  computed: {
+    pagination() {
+      return {
+        pageNum: 1,
+        pageSize: 10,
+        total: 100,
+        event: this.paginationEvent,
+      };
+    },
+  },
   data() {
     return {
       tableSchema: [
         {
           name: "date",
           label: "日期",
-          props: {
-            width: "100",
-            fixed: true,
-          },
         },
         {
           name: "name",
           label: "姓名",
-          props: {
-            width: "100",
-          },
         },
         {
           name: "address",
           label: "地址",
-          props: {
-            width: "100",
-          },
         },
         {
           type: "operation",
           label: "操作",
           props: {
             fixed: "right",
-            width: "100",
           },
           actions: [
             {
@@ -57,6 +62,9 @@ export default {
             {
               type: "link",
               label: "编辑",
+              props:{
+                type:'primary'
+              },
               click: (row) => {
                 console.log(row);
               },
@@ -90,7 +98,10 @@ export default {
   },
   methods: {
     demo() {
-      console.log("我看看this指向还正确吗");
+      console.log("111");
+    },
+    paginationEvent() {
+      console.log(123);
     },
   },
 };

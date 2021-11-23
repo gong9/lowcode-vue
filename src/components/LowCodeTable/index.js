@@ -19,22 +19,36 @@ export default {
     };
   },
   methods: {
+    /** 处理属性与事件 */
     handleTableVnode(vnode) {
+      const fromUserEvent = this._events; // event
+      const otherBLMProps = this.$attrs; // props
+
+      const currentEvent = vnode.componentOptions.listeners;
+      const vnodeProps = vnode.componentOptions.propsData;
+
+      vnode.componentOptions.listeners = {
+        ...currentEvent,
+        ...fromUserEvent,
+      };
+
+      vnode.componentOptions.propsData = {
+        ...vnodeProps,
+        ...otherBLMProps,
+      };
       return vnode;
     },
     handleColVnode(vnode, props) {
-      let vnodeProps = vnode.componentOptions;
-      let newVnodeProps = {
-        ...vnodeProps.propsData,
+      const vnodeProps = vnode.componentOptions.propsData;
+      vnode.componentOptions.propsData = {
+        ...vnodeProps,
         ...props,
       };
-
-      vnode.componentOptions.propsData = newVnodeProps;
       return vnode;
     },
     handleSlot({ type, name, render, actions }) {
       if (render) {
-        const scoped = {
+        return {
           scopedSlots: {
             default: ({ $index, row }) => {
               const rowData = {
@@ -46,9 +60,8 @@ export default {
             },
           },
         };
-        return scoped;
       } else if (type && type === "operation") {
-        const scoped = {
+        return {
           scopedSlots: {
             default: ({ $index, row }) => {
               const rowData = {
@@ -60,7 +73,6 @@ export default {
             },
           },
         };
-        return scoped;
       } else {
         return null;
       }
@@ -81,7 +93,7 @@ export default {
     renderOperation(actions, row) {
       return actions.map((action) => this.renderOperationItem(action, row));
     },
-    renderOperationItem({ type, click, label, hide }, row) {
+    renderOperationItem({ type, click, label, hide, props = {} }, row) {
       if (hide && typeof hide === "function") {
         const flag = hide(row);
         if (flag) return null;
@@ -89,15 +101,15 @@ export default {
 
       switch (type) {
         case "link":
-          return (
+          return this.handleColVnode(
             <el-link
-              type="primary"
               onClick={() => {
                 click(row);
               }}
             >
               {label}
-            </el-link>
+            </el-link>,
+            props
           );
         default:
           return null;
@@ -108,9 +120,7 @@ export default {
     return (
       <div>
         {this.handleTableVnode(
-          <BLM-table pagination={this.pagination} data={this.data}>
-            {this.renderTableColumn()}
-          </BLM-table>
+          <BLM-table data={this.data}>{this.renderTableColumn()}</BLM-table>
         )}
       </div>
     );
