@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "element-ui": "^2.15.6",
+    "leopard-web-component": "^1.4.72",
     "vue": "^2.6.11"
   },
   "devDependencies": {

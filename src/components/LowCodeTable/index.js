@@ -8,6 +8,16 @@ export default {
       type: Array,
     },
   },
+  data: function () {
+    return {
+      pagination: {
+        pageNum: 1,
+        pageSize: 10,
+        total: 100,
+        event: this.paginationEvent,
+      },
+    };
+  },
   methods: {
     handleTableVnode(vnode) {
       return vnode;
@@ -76,7 +86,7 @@ export default {
         const flag = hide(row);
         if (flag) return null;
       }
-      // todo 调用click时把其this确定在使用方的实例上
+
       switch (type) {
         case "link":
           return (
@@ -98,7 +108,9 @@ export default {
     return (
       <div>
         {this.handleTableVnode(
-          <el-table data={this.data}>{this.renderTableColumn()}</el-table>
+          <BLM-table pagination={this.pagination} data={this.data}>
+            {this.renderTableColumn()}
+          </BLM-table>
         )}
       </div>
     );

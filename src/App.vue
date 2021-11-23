@@ -6,12 +6,6 @@
 
 <script>
 import LowCodeTable from "./components/LowCodeTable";
-
-// 一些数据处理过滤处理
-const handleColData01 = (value) => {
-  return value ? value : "-";
-};
-
 export default {
   name: "App",
   components: {
@@ -23,22 +17,36 @@ export default {
         {
           name: "date",
           label: "日期",
+          props: {
+            width: "100",
+            fixed: true,
+          },
         },
         {
           name: "name",
           label: "姓名",
+          props: {
+            width: "100",
+          },
         },
         {
           name: "address",
           label: "地址",
+          props: {
+            width: "100",
+          },
         },
         {
           type: "operation",
           label: "操作",
+          props: {
+            fixed: "right",
+            width: "100",
+          },
           actions: [
             {
               type: "link",
-              label: "详情",
+              label: "查看",
               hide: ({ rowData }) => {
                 if (rowData.name === "王si虎") return true;
               },
@@ -48,14 +56,7 @@ export default {
             },
             {
               type: "link",
-              label: "删除",
-              click: (row) => {
-                console.log(row);
-              },
-            },
-            {
-              type: "link",
-              label: "修改",
+              label: "编辑",
               click: (row) => {
                 console.log(row);
               },
