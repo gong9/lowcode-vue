@@ -71,7 +71,11 @@ export default {
     renderOperation(actions, row) {
       return actions.map((action) => this.renderOperationItem(action, row));
     },
-    renderOperationItem({ type, click, label }, row) {
+    renderOperationItem({ type, click, label, hide }, row) {
+      if (hide && typeof hide === "function") {
+        const flag = hide(row);
+        if (flag) return null;
+      }
       // todo 调用click时把其this确定在使用方的实例上
       switch (type) {
         case "link":
@@ -94,9 +98,7 @@ export default {
     return (
       <div>
         {this.handleTableVnode(
-          <el-table data={this.data} border>
-            {this.renderTableColumn()}
-          </el-table>
+          <el-table data={this.data}>{this.renderTableColumn()}</el-table>
         )}
       </div>
     );

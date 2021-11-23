@@ -9,7 +9,7 @@ import LowCodeTable from "./components/LowCodeTable";
 
 // 一些数据处理过滤处理
 const handleColData01 = (value) => {
-  return value + 1;
+  return value ? value : "-";
 };
 
 export default {
@@ -23,13 +23,6 @@ export default {
         {
           name: "date",
           label: "日期",
-          props: {
-            width: "200",
-            fixed: true,
-          },
-          render: ({ value }) => {
-            return handleColData01(value);
-          },
         },
         {
           name: "name",
@@ -46,8 +39,10 @@ export default {
             {
               type: "link",
               label: "详情",
+              hide: ({ rowData }) => {
+                if (rowData.name === "王si虎") return true;
+              },
               click: (row) => {
-                this.demo();
                 console.log(row);
               },
             },
@@ -70,7 +65,7 @@ export default {
       ],
       tableData: [
         {
-          date: "2016-05-02",
+          date: "",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
         },
