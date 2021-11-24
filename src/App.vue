@@ -52,9 +52,9 @@ export default {
             {
               type: "link",
               label: "查看",
-              hide: ({ rowData }) => {
-                if (rowData.name === "王si虎") return true;
-              },
+              // hide: ({ rowData }) => {
+              //   if (rowData.name === "王si虎") return true;
+              // },
               click: (row) => {
                 console.log(row);
               },
@@ -62,8 +62,8 @@ export default {
             {
               type: "link",
               label: "编辑",
-              props:{
-                type:'primary'
+              props: {
+                type: "primary",
               },
               click: (row) => {
                 console.log(row);
@@ -74,7 +74,7 @@ export default {
       ],
       tableData: [
         {
-          date: "",
+          date: "2016-05-01",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
         },
