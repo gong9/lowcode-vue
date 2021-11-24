@@ -2,6 +2,7 @@
   <div id="app">
     {{ this.formData.name }}
     {{ this.formData.age }}
+    {{ this.formData.select01 }}
     <LowCodeForm
       :data="formData"
       :schema="formSchema"
@@ -106,6 +107,7 @@ export default {
       formData: {
         name: "111",
         age: "19",
+        select01: "",
       },
       formSchema: [
         {
@@ -120,20 +122,61 @@ export default {
         },
         {
           type: "select-sc",
-          label: "单选下拉",
-          name: "demo01",
+          label: "单选下拉框",
+          name: "select01",
+          placeholder: "自定义",
+          options: [
+            {
+              label: "选项1",
+              value: 1,
+            },
+            {
+              label: "选项2",
+              value: 2,
+            },
+            {
+              label: "选项3",
+              value: 3,
+            },
+          ],
         },
         {
           type: "select-mc",
           label: "单选下拉",
           name: "demo02",
         },
+        {
+          type: "actions",
+          body: [
+            {
+              type: "button",
+              label: "搜索",
+              click: () => {
+                console.log(111);
+              },
+            },
+            {
+              type: "button",
+              label: "导出",
+              click: () => {
+                console.log(222);
+              },
+            },
+            {
+              type: "link",
+              label: "查询导出结果",
+              click: () => {
+                this.demo();
+              },
+            },
+          ],
+        },
       ],
     };
   },
   methods: {
     demo() {
-      console.log("111");
+      console.log(this.formData);
     },
     paginationEvent() {
       console.log(123);

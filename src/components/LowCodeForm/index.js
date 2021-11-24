@@ -10,11 +10,6 @@ export default {
       type: Array,
     },
   },
-  data: function () {
-    return {
-      temp: {},
-    };
-  },
   methods: {
     /**
      * 渲染所有表单项
@@ -24,7 +19,8 @@ export default {
     renderAllFormItem(schema) {
       return schema.map((formItemSchema) => {
         const { type, name } = formItemSchema;
-        if (!type || !name) throw new Error("formItemSchema缺少type或name");
+        if (type !== "actions" && (!type || !name))
+          throw new Error("formItemSchema缺少type或name");
 
         return this.renderFormItem(formItemSchema);
       });
@@ -36,7 +32,14 @@ export default {
      * @returns form-item vnode
      */
     renderFormItem(formItemSchema) {
-      const { type, label, name, trim = true } = formItemSchema;
+      const {
+        type,
+        label,
+        name,
+        trim = true,
+        options = [],
+        body = [],
+      } = formItemSchema;
       const { dataSourceName } = this.$attrs;
 
       if (!dataSourceName)
@@ -58,9 +61,20 @@ export default {
             </el-form-item>
           );
         case "select-sc":
-          return null;
+          return (
+            <el-form-item label={label} prop={name}>
+              <el-select
+                vModel={this.$parent[dataSourceName][name]}
+                placeholder={formItemSchema.placeholder || "请选择"}
+              >
+                {this.renderSelectOptions(options)}
+              </el-select>
+            </el-form-item>
+          );
         case "select-mc":
           return null;
+        case "actions":
+          return <template slot="moreBtn">{this.renderActions(body)}</template>;
         default:
           return null;
       }
@@ -68,8 +82,9 @@ export default {
 
     /**
      * 对于input value值处理，eg 去除空格
+     * todo 后续计划其他
      * @param {*} val input value
-     * @param {*} param1 对于
+     * @param {*} param1 对于val的操作方法
      * @returns val
      */
     handleInputVal(val, { trim }) {
@@ -78,6 +93,86 @@ export default {
       } else {
         return val;
       }
+    },
+
+    /**
+     * select中的字选项渲染
+     * @param {*} options
+     * @returns all options vnode
+     */
+    renderSelectOptions(options) {
+      return options.map((option) => {
+        const { label, value } = option;
+        return <el-option key={value} value={value} label={label}></el-option>;
+      });
+    },
+
+    /**
+     * 渲染所有的搜索表单中的所有action控件
+     * @param {*} actions
+     * @returns all action vnode
+     */
+    renderActions(actions) {
+      return actions.map((action) => {
+        return <el-form-item>{this.renderActionbyType(action)}</el-form-item>;
+      });
+    },
+
+    /**
+     * 根据type 分发渲染action
+     * @param {*} action
+     * @returns action vnode
+     */
+    renderActionbyType(action) {
+      const { type, label, click } = action;
+      switch (type) {
+        case "button":
+          return this.renderBtnAction(label, click);
+        case "link":
+          return this.renderLinkAction(label, click);
+        default:
+          return null;
+      }
+    },
+
+    /**
+     * 渲染button
+     * @param {*} label
+     * @param {*} click
+     * @returns btn vnode
+     */
+    renderBtnAction(label, click) {
+      return (
+        <el-button
+          type="primary"
+          size="mini"
+          on-click={() => {
+            click.call(this.$parent);
+          }}
+        >
+          {label}
+        </el-button>
+      );
+    },
+
+    /**
+     * 渲染link
+     * @param {*} label
+     * @param {*} click
+     * @returns link vnode
+     */
+    renderLinkAction(label, click) {
+      return (
+        <el-link
+          type="primary"
+          size="mini"
+          on-click={() => {
+            click.call(this.$parent);
+          }}
+        >
+          {label}
+        </el-link>
+      );
     },
   },
   render: function (h) {
