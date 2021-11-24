@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    {{ this.formData.name }}
-    {{ this.formData.age }}
-    {{ this.formData.select01 }}
+    <h3>表格表单配置化</h3>
     <LowCodeForm
       :data="formData"
       :schema="formSchema"
@@ -62,12 +60,7 @@ export default {
             {
               type: "link",
               label: "查看",
-              // hide: ({ rowData }) => {
-              //   if (rowData.name === "王si虎") return true;
-              // },
-              click: (row) => {
-                console.log(row);
-              },
+              click: (row) => {},
             },
             {
               type: "link",
@@ -82,28 +75,7 @@ export default {
           ],
         },
       ],
-      tableData: [
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王er虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王san虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王si虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+
       formData: {
         name: "111",
         age: "19",
@@ -124,7 +96,7 @@ export default {
           type: "select-sc",
           label: "单选下拉框",
           name: "select01",
-          placeholder: "自定义",
+          // placeholder: "自定义",
           options: [
             {
               label: "选项1",
@@ -151,25 +123,36 @@ export default {
             {
               type: "button",
               label: "搜索",
-              click: () => {
-                console.log(111);
-              },
-            },
-            {
-              type: "button",
-              label: "导出",
-              click: () => {
-                console.log(222);
-              },
+              click: () => {},
             },
             {
               type: "link",
               label: "查询导出结果",
-              click: () => {
-                this.demo();
-              },
+              click: () => {},
             },
           ],
+        },
+      ],
+      tableData: [
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-04",
+          name: "王er虎",
+          address: "上海市普陀区金沙江路 1517 弄",
+        },
+        {
+          date: "2016-05-01",
+          name: "王san虎",
+          address: "上海市普陀区金沙江路 1519 弄",
+        },
+        {
+          date: "2016-05-03",
+          name: "王si虎",
+          address: "上海市普陀区金沙江路 1516 弄",
         },
       ],
     };
