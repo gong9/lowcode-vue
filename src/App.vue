@@ -3,7 +3,7 @@
     <LowCodeTable
       :data="tableData"
       :schema="tableSchema"
-      emptyText="111"
+      emptyText="没有数据"
       maxHeight="400"
       :pagination="pagination"
     />

@@ -1,12 +1,15 @@
-## table
+
+# 配置化组件封装
+## lowcode-table
 
 #### 简单使用
-
+原table的属性和事件直接放到LowCodeTable组件上即可
 ```js
 // template
  <LowCodeTable
       :data="tableData"
       :schema="tableSchema"
+      :emptyText="没有数据"
     />
 
 // script
