@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    {{ this.formData.name }}
+    {{ this.formData.age }}
+    <LowCodeForm
+      :data="formData"
+      :schema="formSchema"
+      dataSourceName="formData"
+    />
     <LowCodeTable
       :data="tableData"
       :schema="tableSchema"
@@ -12,10 +19,12 @@
 
 <script>
 import LowCodeTable from "./components/LowCodeTable";
+import LowCodeForm from "./components/LowCodeForm";
 export default {
   name: "App",
   components: {
     LowCodeTable,
+    LowCodeForm,
   },
   computed: {
     pagination() {
@@ -92,6 +101,32 @@ export default {
           date: "2016-05-03",
           name: "王si虎",
           address: "上海市普陀区金沙江路 1516 弄",
+        },
+      ],
+      formData: {
+        name: "111",
+        age: "19",
+      },
+      formSchema: [
+        {
+          type: "input",
+          label: "姓名",
+          name: "name",
+        },
+        {
+          type: "input",
+          label: "年龄",
+          name: "age",
+        },
+        {
+          type: "select-sc",
+          label: "单选下拉",
+          name: "demo01",
+        },
+        {
+          type: "select-mc",
+          label: "单选下拉",
+          name: "demo02",
         },
       ],
     };

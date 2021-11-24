@@ -1,5 +1,7 @@
+import handleVnode from "../../mixins/handleVnode";
 export default {
   name: "lowcode-ele-table",
+  mixins: [handleVnode],
   props: {
     data: {
       type: Array,
@@ -9,45 +11,6 @@ export default {
     },
   },
   methods: {
-    /**
-     * 将使用方的属性和事件重新注入blmtable
-     * @param {*} vnode
-     * @returns vnode
-     */
-    handleTableVnode(vnode) {
-      const fromUserEvent = this._events; // event
-      const otherBLMProps = this.$attrs; // props
-
-      const currentEvent = vnode.componentOptions.listeners;
-      const vnodeProps = vnode.componentOptions.propsData;
-
-      vnode.componentOptions.listeners = {
-        ...currentEvent,
-        ...fromUserEvent,
-      };
-
-      vnode.componentOptions.propsData = {
-        ...vnodeProps,
-        ...otherBLMProps,
-      };
-      return vnode;
-    },
-
-    /**
-     * 向vnode中注入prop
-     * @param {*} vnode
-     * @param {*} props
-     * @returns vnode
-     */
-    handleColVnode(vnode, props) {
-      const vnodeProps = vnode.componentOptions.propsData;
-      vnode.componentOptions.propsData = {
-        ...vnodeProps,
-        ...props,
-      };
-      return vnode;
-    },
-
     /**
      * 1.使用方如果提供render函数，那么此列按render函数进行渲染
      * 2.关于operation列的渲染
@@ -139,7 +102,7 @@ export default {
       if (!type || !label) {
         throw new Error("actions中的每一项配置必须含有type、lable属性");
       }
-      
+
       switch (type) {
         case "link":
           return this.handleColVnode(
