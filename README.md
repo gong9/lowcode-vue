@@ -107,6 +107,8 @@ formSchema: [
 ];
 ```
 
+#### form-search中提供的表单控件没有符合预期？ 提供组件自定义的能力
+
 ## lowcode-table
 
 #### 简单使用

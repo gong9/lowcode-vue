@@ -17,8 +17,10 @@
 </template>
 
 <script>
+import Vue from "vue";
 import LowCodeTable from "./components/LowCodeTable";
 import LowCodeForm from "./components/LowCodeForm";
+import CitySelect from "./customComponents/city.vue";
 export default {
   name: "App",
   components: {
@@ -113,8 +115,8 @@ export default {
           ],
         },
         {
-          type: "select-mc",
-          label: "单选下拉",
+          type: "demo",
+          label: "自定义组件",
           name: "demo02",
         },
         {
@@ -156,6 +158,9 @@ export default {
         },
       ],
     };
+  },
+  created() {
+    Vue.component("demo", CitySelect);
   },
   methods: {
     demo() {

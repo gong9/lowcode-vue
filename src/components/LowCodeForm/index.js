@@ -1,3 +1,4 @@
+import Vue from "vue";
 import handleVnode from "../../mixins/handleVnode";
 export default {
   name: "lowcode-ele-form-search",
@@ -76,8 +77,27 @@ export default {
         case "actions":
           return <template slot="moreBtn">{this.renderActions(body)}</template>;
         default:
+          // 处理局部注册的
+          if (typeof type === "object") return this.renderCustomComp(type);
+
+          // 处理全局注册的
+          if (Vue.component(type)) {
+            const CustomComp = Vue.component(type);
+            return <CustomComp />;
+          }
           return null;
       }
+    },
+
+    /**
+     * 自定义组件的渲染
+     * todo 未完成，思路不对
+     * @param {*} type
+     * @returns 自定义组件的vnode
+     */
+    renderCustomComp(type) {
+      const vnode = new Vue(type).$mount().$createElement();
+      return null;
     },
 
     /**
