@@ -5,9 +5,11 @@ export default {
   props: {
     data: {
       type: Array,
+      default: () => [],
     },
     schema: {
       type: Array,
+      default: () => [],
     },
   },
   methods: {
@@ -123,7 +125,7 @@ export default {
   render: function (h) {
     return (
       <div>
-        {this.handleTableVnode(
+        {this.handleVnodeProp(
           <BLM-table data={this.data}>{this.renderTableColumn()}</BLM-table>
         )}
       </div>

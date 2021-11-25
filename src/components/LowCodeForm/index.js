@@ -4,11 +4,9 @@ export default {
   name: "lowcode-ele-form-search",
   mixins: [handleVnode],
   props: {
-    data: {
-      type: Object,
-    },
     schema: {
       type: Array,
+      default: () => [],
     },
   },
   methods: {
@@ -199,7 +197,9 @@ export default {
     return (
       <div class="app-main">
         <el-form>
-          <BLM-search>{this.renderAllFormItem(this.schema)}</BLM-search>
+          {this.handleVnodeProp(
+            <BLM-search>{this.renderAllFormItem(this.schema)}</BLM-search>
+          )}
         </el-form>
       </div>
     );

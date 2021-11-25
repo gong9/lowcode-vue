@@ -1,18 +1,16 @@
 <template>
   <div id="app">
-    <h3>表格表单配置化</h3>
-    <LowCodeForm
-      :data="formData"
-      :schema="formSchema"
-      dataSourceName="formData"
-    />
-    <LowCodeTable
-      :data="tableData"
-      :schema="tableSchema"
-      emptyText="没有数据"
-      maxHeight="400"
-      :pagination="pagination"
-    />
+    <div class="curd">
+      <h3>表格表单配置化</h3>
+      <LowCodeForm :schema="formSchema" dataSourceName="formData" maxLine="1" />
+      <LowCodeTable
+        :data="tableData"
+        :schema="tableSchema"
+        emptyText="没有数据"
+        maxHeight="400"
+        :pagination="pagination"
+      />
+    </div>
   </div>
 </template>
 
@@ -81,6 +79,7 @@ export default {
       formData: {
         name: "111",
         age: "19",
+        grade: "",
         select01: "",
       },
       formSchema: [
@@ -93,6 +92,11 @@ export default {
           type: "input",
           label: "年龄",
           name: "age",
+        },
+        {
+          type: "input",
+          label: "班级",
+          name: "grade",
         },
         {
           type: "select-sc",
@@ -115,17 +119,14 @@ export default {
           ],
         },
         {
-          type: "demo",
-          label: "自定义组件",
-          name: "demo02",
-        },
-        {
           type: "actions",
           body: [
             {
               type: "button",
               label: "搜索",
-              click: () => {},
+              click: () => {
+                console.log(this.formData.name);
+              },
             },
             {
               type: "link",
@@ -173,4 +174,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.curd h3 {
+  text-align: center;
+}
+</style>

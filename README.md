@@ -1,5 +1,7 @@
 # 配置化组件封装
 
+> todo: 自定义组件到 lowcode 的功能放到最后去支持
+
 ## lowcode-form-search
 
 一般与 table 配合使用的表单搜索组件
@@ -7,12 +9,14 @@
 仍然保持表单控件与 data 的双向绑定。
 
 #### 基本使用
-dataSourceName为必传属性，值为data中定义的表单数据对象名字 如下的formData
 
-formSchema内属性接受
+dataSourceName 为必传属性，值为 data 中定义的表单数据对象名字 如下的 formData
+
+formSchema 内属性接受
+
 - type： 标名这次要渲染的基础表单控件 eg input
-- label：此基础表单控件的lable
-- name： 与formData中的属性key对应，即：此基础表单控件数据发生改变后，因存在双向数据绑定。使得formData中的对应数据也随着改变
+- label：此基础表单控件的 lable
+- name： 与 formData 中的属性 key 对应，即：此基础表单控件数据发生改变后，因存在双向数据绑定。使得 formData 中的对应数据也随着改变
 
 ```js
 / template
@@ -78,10 +82,11 @@ formSchema内属性接受
 ```
 
 ##### 其他常用表单控件待补充
+
 - 时间区间选择
 - ...
 
-#### 操作行为按钮  eg:（搜索、下载等行为操作）
+#### 操作行为按钮 eg:（搜索、下载等行为操作）
 
 click 函数将作为行为按钮的点击事件处理函数
 
@@ -107,7 +112,7 @@ formSchema: [
 ];
 ```
 
-#### form-search中提供的表单控件没有符合预期？ 提供组件自定义的能力
+#### form-search 中提供的表单控件没有符合预期？ 提供组件自定义的能力
 
 ## lowcode-table
 
