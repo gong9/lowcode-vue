@@ -1,8 +1,16 @@
 <template>
   <div id="app">
+    <div>
+      <h3>表单配置化</h3>
+      <FormDemo />
+    </div>
     <div class="curd">
-      <h3>表格表单配置化</h3>
-      <LowCodeForm :schema="formSchema" dataSourceName="formData" maxLine="1" />
+      <h3>表格&搜索表单配置化</h3>
+      <LowCodeFormSearch
+        :schema="formSchema"
+        dataSourceName="formData"
+        maxLine="1"
+      />
       <LowCodeTable
         :data="tableData"
         :schema="tableSchema"
@@ -15,16 +23,17 @@
 </template>
 
 <script>
-import Vue from "vue";
 import moment from "moment";
 import LowCodeTable from "./components/LowCodeTable";
-import LowCodeForm from "./components/LowCodeForm";
-import CitySelect from "./customComponents/city.vue";
+import LowCodeFormSearch from "./components/LowCodeFormSearch";
+import FormDemo from "./example/form.vue";
+
 export default {
   name: "App",
   components: {
     LowCodeTable,
-    LowCodeForm,
+    LowCodeFormSearch,
+    FormDemo,
   },
   computed: {
     pagination() {
@@ -142,12 +151,15 @@ export default {
               label: "搜索",
               click: () => {
                 console.log(this.formData);
+                // 搜索逻辑
               },
             },
             {
               type: "link",
               label: "查询导出结果",
-              click: () => {},
+              click: () => {
+                // 具体导出逻辑
+              },
             },
           ],
         },
@@ -176,13 +188,7 @@ export default {
       ],
     };
   },
-  created() {
-    Vue.component("demo", CitySelect);
-  },
   methods: {
-    demo() {
-      console.log(this.formData);
-    },
     paginationEvent() {
       console.log(123);
     },
@@ -191,7 +197,7 @@ export default {
 </script>
 
 <style>
-.curd h3 {
+h3 {
   text-align: center;
 }
 </style>

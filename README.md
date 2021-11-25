@@ -21,7 +21,6 @@ formSchema 内属性接受
 ```js
 / template
  <LowCodeForm
-      :data="formData"
       :schema="formSchema"
       dataSourceName="formData"
     />
@@ -83,14 +82,15 @@ formSchema 内属性接受
 
 ##### 其他常用表单控件待补充
 
-- 时间区间选择
-- ...
+- 时间区间选择 [✅]
+- 总结一下比较常用的表单搜素控件，封装进去
+- 其他控件的支持仅是一些重复逻辑
 
 #### 操作行为按钮 eg:（搜索、下载等行为操作）
 
 click 函数将作为行为按钮的点击事件处理函数
 
-暂时只支持 button、link 两种类型的行为组件
+暂时只支持 button、link 两种类型的行为组件（因为发现项目中基本只有这两种样式）
 
 ```js
 formSchema: [
@@ -100,12 +100,16 @@ formSchema: [
       {
         type: "button",
         label: "搜索",
-        click: () => {},
+        click: () => {
+          // 具体搜索逻辑
+        },
       },
       {
         type: "link",
         label: "查询导出结果",
-        click: () => {},
+        click: () => {
+           // 具体导出逻辑
+        },
       },
     ],
   },
@@ -113,6 +117,26 @@ formSchema: [
 ```
 
 #### form-search 中提供的表单控件没有符合预期？ 提供组件自定义的能力
+
+```js
+formSchema: [
+        {
+          type: "custom",
+          label: "用户自定义的组件",
+          name: "custom",
+        },
+
+      ],
+```
+
+用户提供的组件又分为两种情况
+
+- 用户全局注册的组件
+- 用户局部注册的组件
+
+全局注册的组件比较好处理[✅]
+
+局部注册的组件，还是因为 vue 的组件注册限制不太好处理。（后续想一个折中的方案）
 
 ## lowcode-table
 
@@ -297,7 +321,7 @@ formSchema: [
 
 #### 支持操作列某些行为按钮显示隐藏行为
 
-hide 函数 可以根据当前行的属性，进行选择性的现实或隐藏此行为按钮
+hide 函数 可以根据当前行的数据，进行选择性的显示或隐藏此行为按钮
 
 ```js
 tableSchema: [

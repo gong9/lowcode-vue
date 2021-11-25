@@ -1,3 +1,7 @@
+/**
+ * file: 表格组件封装
+ */
+
 import handleVnode from "../../mixins/handleVnode";
 export default {
   name: "lowcode-ele-table",

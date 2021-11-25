@@ -1,216 +1,134 @@
-import Vue from "vue";
+/**
+ * file: 表格组件封装
+ */
+
 import handleVnode from "../../mixins/handleVnode";
 export default {
-  name: "lowcode-ele-form-search",
+  name: "lowcode-ele-form",
   mixins: [handleVnode],
   props: {
+    data: {
+      type: Object,
+    },
     schema: {
       type: Array,
-      default: () => [],
     },
   },
+  data: function () {
+    return {
+      a: [],
+    };
+  },
   methods: {
-    /**
-     * 渲染所有表单项
-     * @param {*} schema
-     * @returns all form-item vnode
-     */
     renderAllFormItem(schema) {
       return schema.map((formItemSchema) => {
-        const { type, name } = formItemSchema;
-        if (type !== "actions" && (!type || !name))
-          throw new Error("formItemSchema缺少type或name");
-
         return this.renderFormItem(formItemSchema);
       });
     },
-
-    /**
-     * 渲染具体表单项
-     * @param {*} formItemSchema
-     * @returns form-item vnode
-     */
     renderFormItem(formItemSchema) {
-      const {
-        type,
-        label,
-        name,
-        trim = true,
-        options = [],
-        body = [],
-        props = {},
-      } = formItemSchema;
-      const { dataSourceName } = this.$attrs;
-
-      if (!dataSourceName)
-        throw new Error("dataSourceName用于数据双向绑定，必传");
-
+      const { type, label, name } = formItemSchema;
       switch (type) {
         case "input":
-          return (
-            <el-form-item label={label} prop={name}>
-              <el-input
-                value={this.$parent[dataSourceName][name]}
-                on-input={(val) => {
-                  this.$parent[dataSourceName][name] = this.handleInputVal(
-                    val,
-                    { trim }
-                  );
-                }}
-              />
-            </el-form-item>
-          );
-        case "select-sc":
-          return (
-            <el-form-item label={label} prop={name}>
-              <el-select
-                vModel={this.$parent[dataSourceName][name]}
-                placeholder={formItemSchema.placeholder || "请选择"}
-              >
-                {this.renderSelectOptions(options)}
-              </el-select>
-            </el-form-item>
-          );
-        case "select-mc":
+          return this.renderInput(formItemSchema);
+        case "select":
+          return this.renderSelect(formItemSchema);
+        case "date":
           return null;
-        case "input-time":
-          return (
-            <el-form-item label={label} prop={name}>
-              {this.handleColVnode(
-                <el-date-picker vModel={this.$parent[dataSourceName][name]} />,
-                props
-              )}
-            </el-form-item>
-          );
-        case "actions":
-          return <template slot="moreBtn">{this.renderActions(body)}</template>;
+        case "switch":
+          return this.renderSwitch(formItemSchema);
+        case "checkbox":
+          return this.renderCheckbox(formItemSchema);
+        case "radio":
+          return this.renderRadio(formItemSchema);
+        case "textarea":
+          return this.renderTextarea(formItemSchema);
         default:
-          // 处理局部注册的
-          if (typeof type === "object") return this.renderCustomComp(type);
-
-          // 处理全局注册的
-          if (Vue.component(type)) {
-            const CustomComp = Vue.component(type);
-            return <CustomComp />;
-          }
-          return null;
+          break;
       }
     },
-
-    /**
-     * 自定义组件的渲染
-     * todo 未完成，思路不对
-     * @param {*} type
-     * @returns 自定义组件的vnode
-     */
-    renderCustomComp(type) {
-      const vnode = new Vue(type).$mount().$createElement();
-      return null;
+    renderInput(formItemSchema) {
+      const { name, label } = formItemSchema;
+      return (
+        <el-form-item label={label}>
+          <el-input vModel={this.$parent[name]}></el-input>
+        </el-form-item>
+      );
     },
-
-    /**
-     * 对于input value值处理，eg 去除空格
-     * todo 后续计划其他
-     * @param {*} val input value
-     * @param {*} param1 对于val的操作方法
-     * @returns val
-     */
-    handleInputVal(val, { trim }) {
-      if (trim) {
-        return val.trim();
-      } else {
-        return val;
-      }
+    renderSelect(formItemSchema) {
+      const { name, label, options = [] } = formItemSchema;
+      return (
+        <el-form-item label={label}>
+          <el-select vModel={this.$parent[name]} placeholder="请选择活动区域">
+            {this.renderOptions(options)}
+          </el-select>
+        </el-form-item>
+      );
     },
-
-    /**
-     * select中的字选项渲染
-     * @param {*} options
-     * @returns all options vnode
-     */
-    renderSelectOptions(options) {
+    renderOptions(options) {
       return options.map((option) => {
         const { label, value } = option;
-        return <el-option key={value} value={value} label={label} />;
+        return <el-option label={label} value={value}></el-option>;
       });
     },
-
-    /**
-     * 渲染所有的搜索表单中的所有action控件
-     * @param {*} actions
-     * @returns all action vnode
-     */
-    renderActions(actions) {
-      return actions.map((action) => {
-        return <el-form-item>{this.renderActionbyType(action)}</el-form-item>;
+    renderDatePicker() {},
+    renderSwitch(formItemSchema) {
+      const { name, label } = formItemSchema;
+      return (
+        <el-form-item label={label}>
+          <el-switch vModel={this.$parent[name]}></el-switch>
+        </el-form-item>
+      );
+    },
+    renderCheckbox(formItemSchema) {
+      const { label, name, options = [] } = formItemSchema;
+      return (
+        <el-form-item label={label}>
+          <el-checkbox-group vModel={this.a}>
+            {this.renderCheckboxItem(options)}
+          </el-checkbox-group>
+        </el-form-item>
+      );
+    },
+    renderCheckboxItem(allCheckbox) {
+      return allCheckbox.map((checkboc) => {
+        const { label, value } = checkboc;
+        return <el-checkbox label={label} value={value}></el-checkbox>;
       });
     },
-
-    /**
-     * 根据type 分发渲染action
-     * @param {*} action
-     * @returns action vnode
-     */
-    renderActionbyType(action) {
-      const { type, label, click } = action;
-      switch (type) {
-        case "button":
-          return this.renderBtnAction(label, click);
-        case "link":
-          return this.renderLinkAction(label, click);
-        default:
-          return null;
-      }
-    },
-
-    /**
-     * 渲染button
-     * @param {*} label
-     * @param {*} click
-     * @returns btn vnode
-     */
-    renderBtnAction(label, click) {
+    renderRadio(formItemSchema) {
+      const { name, label, options } = formItemSchema;
       return (
-        <el-button
-          type="primary"
-          size="mini"
-          on-click={() => {
-            click.call(this.$parent);
-          }}
-        >
-          {label}
-        </el-button>
+        <el-form-item label={label}>
+          <el-radio-group vModel={this.$parent[name]}>
+            {this.renderRadioItem(options)}
+          </el-radio-group>
+        </el-form-item>
       );
     },
-
-    /**
-     * 渲染link
-     * @param {*} label
-     * @param {*} click
-     * @returns link vnode
-     */
-    renderLinkAction(label, click) {
+    renderRadioItem(options) {
+      return options.map((radio) => {
+        const { label } = radio;
+        return <el-radio label={label}></el-radio>;
+      });
+    },
+    renderTextarea(formItemSchema) {
+      const { name, label } = formItemSchema;
       return (
-        <el-link
-          type="primary"
-          size="mini"
-          on-click={() => {
-            click.call(this.$parent);
-          }}
-        >
-          {label}
-        </el-link>
+        <el-form-item label={label}>
+          <el-input type="textarea" vModel={this.$parent[name]}></el-input>
+        </el-form-item>
       );
     },
+    renderActions() {},
   },
   render: function (h) {
     return (
-      <div class="app-main">
-        <el-form>
-          {this.handleVnodeProp(
-            <BLM-search>{this.renderAllFormItem(this.schema)}</BLM-search>
-          )}
-        </el-form>
+      <div>
+        {this.handleVnodeProp(
+          <el-form label-width="80px">
+            {this.renderAllFormItem(this.schema)}
+          </el-form>
+        )}
       </div>
     );
   },
