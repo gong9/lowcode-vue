@@ -20,7 +20,7 @@ export default {
      * @returns scopedSlots
      */
     handleSlot({ type, name, render, actions }) {
-      if (render) {
+      if (render && typeof render === "function") {
         return {
           scopedSlots: {
             default: ({ $index, row }) => {
