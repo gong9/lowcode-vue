@@ -38,6 +38,7 @@ export default {
         trim = true,
         options = [],
         body = [],
+        props = {},
       } = formItemSchema;
       const { dataSourceName } = this.$attrs;
 
@@ -72,6 +73,15 @@ export default {
           );
         case "select-mc":
           return null;
+        case "input-time":
+          return (
+            <el-form-item label={label} prop={name}>
+              {this.handleColVnode(
+                <el-date-picker vModel={this.$parent[dataSourceName][name]} />,
+                props
+              )}
+            </el-form-item>
+          );
         case "actions":
           return <template slot="moreBtn">{this.renderActions(body)}</template>;
         default:
@@ -121,7 +131,7 @@ export default {
     renderSelectOptions(options) {
       return options.map((option) => {
         const { label, value } = option;
-        return <el-option key={value} value={value} label={label}></el-option>;
+        return <el-option key={value} value={value} label={label} />;
       });
     },
 

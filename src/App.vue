@@ -16,6 +16,7 @@
 
 <script>
 import Vue from "vue";
+import moment from "moment";
 import LowCodeTable from "./components/LowCodeTable";
 import LowCodeForm from "./components/LowCodeForm";
 import CitySelect from "./customComponents/city.vue";
@@ -80,6 +81,10 @@ export default {
         name: "111",
         age: "19",
         grade: "",
+        time: [
+          moment().subtract(30, "days").startOf("day").valueOf(),
+          moment().endOf("day").milliseconds(0).valueOf(),
+        ],
         select01: "",
       },
       formSchema: [
@@ -97,6 +102,17 @@ export default {
           type: "input",
           label: "班级",
           name: "grade",
+        },
+        {
+          type: "input-time",
+          label: "选择时间",
+          name: "time",
+          props: {
+            type: "daterange",
+            defaultTime: ["00:00:00", "23:59:59"],
+            placeholder: "选择日期",
+            style: "width: 100%;",
+          },
         },
         {
           type: "select-sc",
@@ -125,7 +141,7 @@ export default {
               type: "button",
               label: "搜索",
               click: () => {
-                console.log(this.formData.name);
+                console.log(this.formData);
               },
             },
             {
