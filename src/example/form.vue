@@ -1,15 +1,11 @@
 <template>
   <div>
-    <LowCodeForm :model="form" :schema="formSchema" />
+    <lowcode-form :model="form" :schema="formSchema" />
   </div>
 </template>
 
 <script>
-import LowCodeForm from "../components/LowCodeForm";
 export default {
-  components: {
-    LowCodeForm,
-  },
   data: function () {
     return {
       form: {

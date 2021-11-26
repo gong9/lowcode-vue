@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LowCodeFormSearch
+    <lowcode-form-search
       :schema="formSchema"
       dataSourceName="formData"
       maxLine="1"
@@ -8,8 +8,8 @@
       <template v-slot:city>
         <City />
       </template>
-    </LowCodeFormSearch>
-    <LowCodeTable
+    </lowcode-form-search>
+    <lowcode-table
       :data="tableData"
       :schema="tableSchema"
       emptyText="没有数据"
@@ -21,15 +21,11 @@
 
 <script>
 import moment from "moment";
-import LowCodeTable from "../components/LowCodeTable";
-import LowCodeFormSearch from "../components/LowCodeFormSearch";
 import City from "./custom/City.vue";
 
 export default {
   name: "App",
   components: {
-    LowCodeTable,
-    LowCodeFormSearch,
     City,
   },
   computed: {

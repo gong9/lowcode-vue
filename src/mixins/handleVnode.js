@@ -5,7 +5,7 @@ export default {
      * @param {*} vnode
      * @returns vnode
      */
-     handleVnodeProp(vnode) {
+    handleVnodeProp(vnode) {
       const fromUserEvent = this._events; // event
       const otherBLMProps = this.$attrs; // props
 

@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import moment from "moment";
 import TableDemo from "./example/curd.vue";
 import FormDemo from "./example/form.vue";
 
