@@ -1,7 +1,9 @@
-# 配置化组件封装
+# vue lowcode 配置化组件
 
-> todo: 自定义组件到 lowcode 的功能放到最后去支持 [表单搜索组件支持自定义组件 ✅]
+> 对于 toB 的一些组件改造为 lowcode 的方式
 
+## lowcode-form
+未完成
 ## lowcode-form-search
 
 一般与 table 配合使用的表单搜索组件
@@ -19,13 +21,13 @@ formSchema 内属性接受
 - name： 与 formData 中的属性 key 对应，即：此基础表单控件数据发生改变后，因存在双向数据绑定。使得 formData 中的对应数据也随着改变
 
 ```js
-/ template
+//template
  <LowCodeForm
       :schema="formSchema"
       dataSourceName="formData"
     />
 
-// script data中
+// script data
 
      {
       formData: {
@@ -47,8 +49,8 @@ formSchema 内属性接受
      }
 
 ```
-
-#### 下拉框
+### 一些lowcode-form-search具体的表单项
+#### 1.下拉框
 
 ```js
 {

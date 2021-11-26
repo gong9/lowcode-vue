@@ -16,6 +16,11 @@ export default {
       default: () => [],
     },
   },
+  data: function () {
+    return {
+      tableRef: null,
+    };
+  },
   methods: {
     /**
      * 1.使用方如果提供render函数，那么此列按render函数进行渲染
@@ -33,7 +38,7 @@ export default {
                 rowData: row,
                 value: row[name],
               };
-              return render(rowData);
+              return render.call(this.$parent, rowData);
             },
           },
         };
@@ -74,6 +79,7 @@ export default {
 
         return this.handleColVnode(
           <el-table-column
+            type={type}
             prop={name}
             label={label}
             {...props}
@@ -126,11 +132,17 @@ export default {
       }
     },
   },
+  mounted: function () {
+    this.tableRef = this.$refs.table;
+  },
   render: function (h) {
     return (
       <div>
+        {/* blm-table js控制选中行时存在bug 未支持相关方法 */}
         {this.handleVnodeProp(
-          <BLM-table data={this.data}>{this.renderTableColumn()}</BLM-table>
+          <el-table ref="table" data={this.data}>
+            {this.renderTableColumn()}
+          </el-table>
         )}
       </div>
     );

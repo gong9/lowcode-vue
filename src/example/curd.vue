@@ -10,11 +10,13 @@
       </template>
     </lowcode-form-search>
     <lowcode-table
+      ref="multipleTable"
       :data="tableData"
       :schema="tableSchema"
       emptyText="没有数据"
       maxHeight="400"
       :pagination="pagination"
+      @selection-change="handleSelectionChange"
     />
   </div>
 </template>
@@ -41,9 +43,13 @@ export default {
   data() {
     return {
       tableSchema: [
+        { type: "selection" },
         {
           name: "date",
           label: "日期",
+          props: {
+            sortable: true,
+          },
         },
         {
           name: "name",
@@ -62,7 +68,13 @@ export default {
           actions: [
             {
               type: "link",
-              label: "查看",
+              label: "切换二三行选中状态",
+              props: {
+                type: "primary",
+              },
+              click: () => {
+                this.toggleSelection([this.tableData[1], this.tableData[2]]);
+              },
             },
             {
               type: "link",
@@ -187,6 +199,18 @@ export default {
   methods: {
     paginationEvent() {
       console.log(123);
+    },
+    handleSelectionChange(val) {
+      console.log(val);
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach((row) => {
+          this.$refs.multipleTable.tableRef.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.tableRef.clearSelection();
+      }
     },
   },
 };
