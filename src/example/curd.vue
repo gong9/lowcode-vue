@@ -4,7 +4,11 @@
       :schema="formSchema"
       dataSourceName="formData"
       maxLine="1"
-    />
+    >
+      <template v-slot:city>
+        <City />
+      </template>
+    </LowCodeFormSearch>
     <LowCodeTable
       :data="tableData"
       :schema="tableSchema"
@@ -19,12 +23,14 @@
 import moment from "moment";
 import LowCodeTable from "../components/LowCodeTable";
 import LowCodeFormSearch from "../components/LowCodeFormSearch";
+import City from "./custom/City.vue";
 
 export default {
   name: "App",
   components: {
     LowCodeTable,
     LowCodeFormSearch,
+    City,
   },
   computed: {
     pagination() {
@@ -61,7 +67,6 @@ export default {
             {
               type: "link",
               label: "查看",
-              click: (row) => {},
             },
             {
               type: "link",
@@ -76,17 +81,6 @@ export default {
           ],
         },
       ],
-
-      formData: {
-        name: "111",
-        age: "19",
-        grade: "",
-        time: [
-          moment().subtract(30, "days").startOf("day").valueOf(),
-          moment().endOf("day").milliseconds(0).valueOf(),
-        ],
-        select01: "",
-      },
       formSchema: [
         {
           type: "input",
@@ -135,6 +129,11 @@ export default {
           ],
         },
         {
+          type: "city",
+          label: "选择城市",
+          name: "grade",
+        },
+        {
           type: "actions",
           body: [
             {
@@ -155,6 +154,16 @@ export default {
           ],
         },
       ],
+      formData: {
+        name: "111",
+        age: "19",
+        grade: "",
+        time: [
+          moment().subtract(30, "days").startOf("day").valueOf(),
+          moment().endOf("day").milliseconds(0).valueOf(),
+        ],
+        select01: "",
+      },
       tableData: [
         {
           date: "2016-05-01",

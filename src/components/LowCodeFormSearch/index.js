@@ -89,27 +89,36 @@ export default {
         case "actions":
           return <template slot="moreBtn">{this.renderActions(body)}</template>;
         default:
-          // 处理局部注册的
-          if (typeof type === "object") return this.renderCustomComp(type);
-
-          // 处理全局注册的
-          if (Vue.component(type)) {
-            const CustomComp = Vue.component(type);
-            return <CustomComp />;
+          if (Vue.component(type) || this.$slots[type]) {
+            const customType = Vue.component(type) ? 1 : 2;
+            return this.renderCustomComp(customType, formItemSchema);
           }
+
           return null;
       }
     },
 
     /**
      * 自定义组件的渲染
-     * todo 未完成，思路不对
-     * @param {*} type
+     * @customType {*} 自定义组件类型 1 全局注册 2 局部注册
+     * @formItemSchema {*} 该表单项的具体schema
      * @returns 自定义组件的vnode
      */
-    renderCustomComp(type) {
-      const vnode = new Vue(type).$mount().$createElement();
-      return null;
+    renderCustomComp(customType, formItemSchema) {
+      const { type, label, name } = formItemSchema;
+      // 处理全局注册的
+      if (customType === 1) {
+        const CustomComp = Vue.component(type);
+        return <CustomComp />;
+      }
+      // 处理局部注册的
+      if (customType === 2) {
+        return (
+          <el-form-item label={label} prop={name}>
+            {this.$slots[type]}
+          </el-form-item>
+        );
+      }
     },
 
     /**

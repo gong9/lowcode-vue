@@ -1,6 +1,6 @@
 # 配置化组件封装
 
-> todo: 自定义组件到 lowcode 的功能放到最后去支持
+> todo: 自定义组件到 lowcode 的功能放到最后去支持 [表单搜索组件支持自定义组件 ✅]
 
 ## lowcode-form-search
 
@@ -108,7 +108,7 @@ formSchema: [
         type: "link",
         label: "查询导出结果",
         click: () => {
-           // 具体导出逻辑
+          // 具体导出逻辑
         },
       },
     ],
