@@ -102,6 +102,7 @@ export default {
               type: "button",
               label: "提交",
               click: () => {
+                console.log(this.$refs.ruleForm.form.validate);
                 // 提交逻辑
                 this.$refs.ruleForm.form.validate((valid) => {
                   if (valid) {
@@ -130,22 +131,6 @@ export default {
         ],
         region: [
           { required: true, message: "请选择活动区域", trigger: "change" },
-        ],
-        date1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change",
-          },
-        ],
-        date2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change",
-          },
         ],
         type: [
           {

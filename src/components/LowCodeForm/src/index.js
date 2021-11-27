@@ -15,6 +15,9 @@ export default {
     schema: {
       type: Array,
     },
+    rules: {
+      type: Object,
+    },
   },
   data: function () {
     return {
@@ -54,7 +57,7 @@ export default {
     renderInput(formItemSchem, dataSourceName) {
       const { name, label } = formItemSchem;
       return (
-        <el-form-item label={label}>
+        <el-form-item label={label} prop={name}>
           <el-input vModel={this.$parent[dataSourceName][name]}></el-input>
         </el-form-item>
       );
@@ -62,7 +65,7 @@ export default {
     renderSelect(formItemSchema, dataSourceName) {
       const { name, label, options = [] } = formItemSchema;
       return (
-        <el-form-item label={label}>
+        <el-form-item label={label} prop={name}>
           <el-select
             vModel={this.$parent[dataSourceName][name]}
             placeholder="请选择活动区域"
@@ -82,7 +85,7 @@ export default {
     renderSwitch(formItemSchema, dataSourceName) {
       const { name, label } = formItemSchema;
       return (
-        <el-form-item label={label}>
+        <el-form-item label={label} prop={name}>
           <el-switch vModel={this.$parent[dataSourceName][name]}></el-switch>
         </el-form-item>
       );
@@ -90,7 +93,7 @@ export default {
     renderCheckbox(formItemSchema, dataSourceName) {
       const { label, name, options = [] } = formItemSchema;
       return (
-        <el-form-item label={label}>
+        <el-form-item label={label} prop={name}>
           <el-checkbox-group vModel={this.$parent[dataSourceName][name]}>
             {this.renderCheckboxItem(options)}
           </el-checkbox-group>
@@ -106,7 +109,7 @@ export default {
     renderRadio(formItemSchema, dataSourceName) {
       const { name, label, options } = formItemSchema;
       return (
-        <el-form-item label={label}>
+        <el-form-item label={label} prop={name}>
           <el-radio-group vModel={this.$parent[dataSourceName][name]}>
             {this.renderRadioItem(options)}
           </el-radio-group>
@@ -122,7 +125,7 @@ export default {
     renderTextarea(formItemSchema, dataSourceName) {
       const { name, label } = formItemSchema;
       return (
-        <el-form-item label={label}>
+        <el-form-item label={label} prop={name}>
           <el-input
             type="textarea"
             vModel={this.$parent[dataSourceName][name]}
@@ -174,7 +177,7 @@ export default {
     return (
       <div>
         {this.handleVnodeProp(
-          <el-form ref="form" label-width="80px">
+          <el-form rules={this.rules} ref="form" label-width="80px">
             {this.renderAllFormItem(this.schema)}
           </el-form>
         )}
