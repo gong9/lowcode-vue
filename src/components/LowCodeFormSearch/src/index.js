@@ -109,7 +109,11 @@ export default {
       // 处理全局注册的
       if (customType === 1) {
         const CustomComp = Vue.component(type);
-        return <CustomComp />;
+        return (
+          <el-form-item label={label} prop={name}>
+            <CustomComp />
+          </el-form-item>
+        );
       }
       // 处理局部注册的
       if (customType === 2) {
