@@ -18,7 +18,7 @@ export default {
         name: "",
         region: "",
         date: "",
-        delivery: "",
+        delivery: false,
         type: [],
         resource: "",
         desc: "",
@@ -58,6 +58,9 @@ export default {
           type: "checkbox",
           name: "type",
           label: "活动性质",
+          visible: () => {
+            return this.form.delivery === true;
+          },
           options: [
             {
               label: "美食/餐厅线上活动",
@@ -83,10 +86,10 @@ export default {
           label: "特殊资源",
           options: [
             {
-              label: "线上品牌商赞助",
+              label: 1,
             },
             {
-              label: "线下场地免费",
+              label: 2,
             },
           ],
         },
@@ -94,6 +97,9 @@ export default {
           type: "textarea",
           name: "desc",
           label: "活动形式",
+          disabled: () => {
+            return this.form.resource === 1;
+          },
         },
         {
           type: "actions",
@@ -102,7 +108,6 @@ export default {
               type: "button",
               label: "提交",
               click: () => {
-                console.log(this.$refs.ruleForm.form.validate);
                 // 提交逻辑
                 this.$refs.ruleForm.form.validate((valid) => {
                   if (valid) {
@@ -118,7 +123,7 @@ export default {
               type: "button",
               label: "取消",
               click: () => {
-                // 具体导出逻辑
+                // 具体逻辑
               },
             },
           ],

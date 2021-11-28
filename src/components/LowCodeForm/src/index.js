@@ -32,47 +32,65 @@ export default {
     },
     renderFormItem(formItemSchema) {
       const { dataSourceName } = this.$attrs;
-      const { type } = formItemSchema;
+      const { label, name, type, visible, disabled } = formItemSchema;
+
+      if (typeof visible === "function") {
+        if (!visible.call()) return null;
+      }
+      if (typeof visible === "boolean") if (!visible) return null;
+
+      let formItemVnode = null;
       switch (type) {
         case "input":
-          return this.renderInput(formItemSchema, dataSourceName);
+          formItemVnode = (
+            <lowcode-form-item
+              schema={formItemSchema}
+              dataSourceName={dataSourceName}
+              ctx={this}
+            />
+          );
+          break;
         case "select":
-          return this.renderSelect(formItemSchema, dataSourceName);
+          formItemVnode = this.renderSelect(formItemSchema, dataSourceName);
+          break;
         case "date":
           return null;
         case "switch":
-          return this.renderSwitch(formItemSchema, dataSourceName);
+          formItemVnode = this.renderSwitch(formItemSchema, dataSourceName);
+          break;
         case "checkbox":
-          return this.renderCheckbox(formItemSchema, dataSourceName);
+          formItemVnode = this.renderCheckbox(formItemSchema, dataSourceName);
+          break;
         case "radio":
-          return this.renderRadio(formItemSchema, dataSourceName);
+          formItemVnode = this.renderRadio(formItemSchema, dataSourceName);
+          break;
         case "textarea":
-          return this.renderTextarea(formItemSchema, dataSourceName);
+          formItemVnode = this.renderTextarea(formItemSchema, dataSourceName);
+          break;
         case "actions":
-          return this.renderActions(formItemSchema);
+          formItemVnode = this.renderActions(formItemSchema);
+          break;
         default:
+          formItemVnode = null;
           break;
       }
-    },
-    renderInput(formItemSchem, dataSourceName) {
-      const { name, label } = formItemSchem;
       return (
-        <el-form-item label={label} prop={name}>
-          <el-input vModel={this.$parent[dataSourceName][name]}></el-input>
-        </el-form-item>
+        formItemVnode && (
+          <el-form-item label={label} prop={name}>
+            {formItemVnode}
+          </el-form-item>
+        )
       );
     },
     renderSelect(formItemSchema, dataSourceName) {
       const { name, label, options = [] } = formItemSchema;
       return (
-        <el-form-item label={label} prop={name}>
-          <el-select
-            vModel={this.$parent[dataSourceName][name]}
-            placeholder="请选择活动区域"
-          >
-            {this.renderOptions(options)}
-          </el-select>
-        </el-form-item>
+        <el-select
+          vModel={this.$parent[dataSourceName][name]}
+          placeholder="请选择活动区域"
+        >
+          {this.renderOptions(options)}
+        </el-select>
       );
     },
     renderOptions(options) {
@@ -85,19 +103,15 @@ export default {
     renderSwitch(formItemSchema, dataSourceName) {
       const { name, label } = formItemSchema;
       return (
-        <el-form-item label={label} prop={name}>
-          <el-switch vModel={this.$parent[dataSourceName][name]}></el-switch>
-        </el-form-item>
+        <el-switch vModel={this.$parent[dataSourceName][name]}></el-switch>
       );
     },
     renderCheckbox(formItemSchema, dataSourceName) {
       const { label, name, options = [] } = formItemSchema;
       return (
-        <el-form-item label={label} prop={name}>
-          <el-checkbox-group vModel={this.$parent[dataSourceName][name]}>
-            {this.renderCheckboxItem(options)}
-          </el-checkbox-group>
-        </el-form-item>
+        <el-checkbox-group vModel={this.$parent[dataSourceName][name]}>
+          {this.renderCheckboxItem(options)}
+        </el-checkbox-group>
       );
     },
     renderCheckboxItem(allCheckbox) {
@@ -109,11 +123,9 @@ export default {
     renderRadio(formItemSchema, dataSourceName) {
       const { name, label, options } = formItemSchema;
       return (
-        <el-form-item label={label} prop={name}>
-          <el-radio-group vModel={this.$parent[dataSourceName][name]}>
-            {this.renderRadioItem(options)}
-          </el-radio-group>
-        </el-form-item>
+        <el-radio-group vModel={this.$parent[dataSourceName][name]}>
+          {this.renderRadioItem(options)}
+        </el-radio-group>
       );
     },
     renderRadioItem(options) {
@@ -125,12 +137,10 @@ export default {
     renderTextarea(formItemSchema, dataSourceName) {
       const { name, label } = formItemSchema;
       return (
-        <el-form-item label={label} prop={name}>
-          <el-input
-            type="textarea"
-            vModel={this.$parent[dataSourceName][name]}
-          ></el-input>
-        </el-form-item>
+        <el-input
+          type="textarea"
+          vModel={this.$parent[dataSourceName][name]}
+        ></el-input>
       );
     },
     renderActions(formItemSchema) {
