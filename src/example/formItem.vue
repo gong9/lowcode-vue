@@ -70,6 +70,12 @@ export default {
       schema4: {
         type: "switch",
         name: "demo04",
+        props: {
+          activeColor: "#13ce66",
+          inactiveColor: "#ff4949",
+          activeValue: "100",
+          inactiveValue: "0",
+        },
       },
     };
   },

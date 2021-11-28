@@ -43,6 +43,7 @@ export default {
       switch (type) {
         case "input":
         case "select":
+        case "switch":
           formItemVnode = (
             <lowcode-form-item
               schema={formItemSchema}
@@ -53,9 +54,6 @@ export default {
           break;
         case "date":
           return null;
-        case "switch":
-          formItemVnode = this.renderSwitch(formItemSchema, dataSourceName);
-          break;
         case "checkbox":
           formItemVnode = this.renderCheckbox(formItemSchema, dataSourceName);
           break;

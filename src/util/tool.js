@@ -9,4 +9,19 @@ const handleFnToBooler = (schemaItem, ctx) => {
   if (typeof schemaItem === "function") return schemaItem.call(ctx);
 };
 
-export { handleFnToBooler };
+/**
+ * 向vnode中注入prop
+ * @param {*} vnode
+ * @param {*} props
+ * @returns vnode
+ */
+const handleColVnode = (vnode, props) => {
+  const vnodeProps = vnode.componentOptions.propsData;
+  vnode.componentOptions.propsData = {
+    ...vnodeProps,
+    ...props,
+  };
+  return vnode;
+};
+
+export { handleFnToBooler, handleColVnode };
