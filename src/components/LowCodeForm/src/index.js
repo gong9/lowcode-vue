@@ -1,7 +1,7 @@
 /**
  * file: 表格组件封装
- * todo 思考基础的表单控件需不需要写在此文件中
- * todo 思考几种常见的组件联动关系
+ * todo 思考基础的表单控件需不需要写在此文件中 --都抽出去
+ * todo 思考几种常见的组件联动关系 基础联动文件中仅需提供对应显示隐藏、可用不可用逻辑即可
  */
 
 import handleVnode from "../../../mixins/handleVnode";
@@ -21,7 +21,7 @@ export default {
   },
   data: function () {
     return {
-      form: null,
+      form: null, // 用于存储el-form实例
     };
   },
   methods: {

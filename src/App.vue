@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <h3>基础表单项</h3>
+      <h3>基础表单项配置化</h3>
       <FormItemDemo />
     </div>
     <div>

@@ -1,5 +1,6 @@
 import InputRender from "./formItemRender/input";
 import SelectRender from "./formItemRender/select";
+import SwitchRender from "./formItemRender/switch";
 
 export default {
   name: "lowcode-form-item",
@@ -22,9 +23,15 @@ export default {
             createEle={h}
           />
         )}
-
         {type === "select" && (
           <SelectRender
+            schema={this.schema}
+            ctx={this.ctx || this}
+            createEle={h}
+          />
+        )}
+        {type === "switch" && (
+          <SwitchRender
             schema={this.schema}
             ctx={this.ctx || this}
             createEle={h}

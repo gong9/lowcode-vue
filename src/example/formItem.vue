@@ -3,6 +3,7 @@
     <lowcode-form-item :schema="schema1" dataSourceName="inputData" />
     <lowcode-form-item :schema="schema2" dataSourceName="inputData" />
     <lowcode-form-item :schema="schema3" dataSourceName="inputData" />
+    <lowcode-form-item :schema="schema4" dataSourceName="inputData" />
   </div>
 </template>
 
@@ -11,13 +12,14 @@ export default {
   data: function () {
     return {
       inputData: {
-        input1: "1111",
-        input2: "111",
+        demo01: "1111",
+        demo02: "111",
         demo03: "",
+        demo04: true,
       },
       schema1: {
         type: "input",
-        name: "input1",
+        name: "demo01",
         placeholder: "请输入内容",
         disabled: false,
         slot: (h) => {
@@ -29,7 +31,7 @@ export default {
       },
       schema2: {
         type: "input",
-        name: "input2",
+        name: "demo02",
         placeholder: "请输入密码",
         disabled: false,
         props: {
@@ -64,6 +66,10 @@ export default {
             label: "北京烤鸭",
           },
         ],
+      },
+      schema4: {
+        type: "switch",
+        name: "demo04",
       },
     };
   },
