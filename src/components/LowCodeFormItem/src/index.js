@@ -1,4 +1,5 @@
-import inputRender from "./formItemRender/input";
+import InputRender from "./formItemRender/input";
+import SelectRender from "./formItemRender/select";
 
 export default {
   name: "lowcode-form-item",
@@ -15,7 +16,15 @@ export default {
     return (
       <fragment>
         {type === "input" && (
-          <inputRender
+          <InputRender
+            schema={this.schema}
+            ctx={this.ctx || this}
+            createEle={h}
+          />
+        )}
+
+        {type === "select" && (
+          <SelectRender
             schema={this.schema}
             ctx={this.ctx || this}
             createEle={h}

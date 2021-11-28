@@ -2,6 +2,7 @@
   <div>
     <lowcode-form-item :schema="schema1" dataSourceName="inputData" />
     <lowcode-form-item :schema="schema2" dataSourceName="inputData" />
+    <lowcode-form-item :schema="schema3" dataSourceName="inputData" />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ export default {
       inputData: {
         input1: "1111",
         input2: "111",
+        demo03: "",
       },
       schema1: {
         type: "input",
@@ -35,6 +37,33 @@ export default {
           showPassword: true,
           suffixIcon: "el-icon-date",
         },
+      },
+      schema3: {
+        type: "select",
+        name: "demo03",
+        placeholder: "下拉框请选择",
+        options: [
+          {
+            value: "选项1",
+            label: "黄金糕",
+          },
+          {
+            value: "选项2",
+            label: "双皮奶",
+          },
+          {
+            value: "选项3",
+            label: "蚵仔煎",
+          },
+          {
+            value: "选项4",
+            label: "龙须面",
+          },
+          {
+            value: "选项5",
+            label: "北京烤鸭",
+          },
+        ],
       },
     };
   },

@@ -42,6 +42,7 @@ export default {
       let formItemVnode = null;
       switch (type) {
         case "input":
+        case "select":
           formItemVnode = (
             <lowcode-form-item
               schema={formItemSchema}
@@ -49,9 +50,6 @@ export default {
               ctx={this}
             />
           );
-          break;
-        case "select":
-          formItemVnode = this.renderSelect(formItemSchema, dataSourceName);
           break;
         case "date":
           return null;
@@ -81,23 +79,6 @@ export default {
           </el-form-item>
         )
       );
-    },
-    renderSelect(formItemSchema, dataSourceName) {
-      const { name, label, options = [] } = formItemSchema;
-      return (
-        <el-select
-          vModel={this.$parent[dataSourceName][name]}
-          placeholder="请选择活动区域"
-        >
-          {this.renderOptions(options)}
-        </el-select>
-      );
-    },
-    renderOptions(options) {
-      return options.map((option) => {
-        const { label, value } = option;
-        return <el-option label={label} value={value}></el-option>;
-      });
     },
     renderDatePicker() {},
     renderSwitch(formItemSchema, dataSourceName) {
