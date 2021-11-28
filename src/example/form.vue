@@ -97,6 +97,7 @@ export default {
           type: "textarea",
           name: "desc",
           label: "活动形式",
+          // 优化代码，逻辑暂时没处理
           disabled: () => {
             return this.form.resource === 1;
           },
