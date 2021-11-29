@@ -4,6 +4,7 @@
     <lowcode-form-item :schema="schema2" dataSourceName="inputData" />
     <lowcode-form-item :schema="schema3" dataSourceName="inputData" />
     <lowcode-form-item :schema="schema4" dataSourceName="inputData" />
+    <lowcode-form-item :schema="schema5" dataSourceName="inputData" />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ export default {
         demo02: "111",
         demo03: "",
         demo04: true,
+        demo05: "",
       },
       schema1: {
         type: "input",
@@ -75,6 +77,9 @@ export default {
           inactiveColor: "#ff4949",
           activeValue: "100",
           inactiveValue: "0",
+        },
+        schema4: {
+          type: "checkbox",
         },
       },
     };

@@ -108,7 +108,7 @@ export default {
      */
     renderOperationItem({ type, click, label, hide, props = {} }, row) {
       if (hide && typeof hide === "function") {
-        const flag = hide.call(this.$parent,row);
+        const flag = hide.call(this.$parent, row);
         if (flag) return null;
       }
       if (!type || !label) {
