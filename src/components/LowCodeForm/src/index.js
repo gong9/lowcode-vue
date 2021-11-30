@@ -44,6 +44,7 @@ export default {
         case "input":
         case "select":
         case "switch":
+        case "checkbox":
           formItemVnode = (
             <lowcode-form-item
               schema={formItemSchema}
@@ -54,9 +55,6 @@ export default {
           break;
         case "date":
           return null;
-        case "checkbox":
-          formItemVnode = this.renderCheckbox(formItemSchema, dataSourceName);
-          break;
         case "radio":
           formItemVnode = this.renderRadio(formItemSchema, dataSourceName);
           break;

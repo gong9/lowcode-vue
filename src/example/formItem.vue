@@ -17,7 +17,7 @@ export default {
         demo02: "111",
         demo03: "",
         demo04: true,
-        demo05: "",
+        demo05: [],
       },
       schema1: {
         type: "input",
@@ -78,9 +78,24 @@ export default {
           activeValue: "100",
           inactiveValue: "0",
         },
-        schema4: {
-          type: "checkbox",
-        },
+      },
+      schema5: {
+        type: "checkbox",
+        name: "demo05",
+        options: [
+          {
+            label: "选项1",
+            value: "1",
+          },
+          {
+            label: "选项2",
+            value: "2",
+          },
+          {
+            label: "选项3",
+            value: "3",
+          },
+        ],
       },
     };
   },

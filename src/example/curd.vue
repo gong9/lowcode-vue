@@ -13,9 +13,6 @@
       ref="multipleTable"
       :data="tableData"
       :schema="tableSchema"
-      emptyText="没有数据"
-      maxHeight="400"
-      :pagination="pagination"
       @selection-change="handleSelectionChange"
     />
   </div>
@@ -42,53 +39,59 @@ export default {
   },
   data() {
     return {
-      tableSchema: [
-        { type: "selection" },
-        {
-          name: "date",
-          label: "日期",
-          props: {
-            sortable: true,
-          },
+      tableSchema: {
+        type: "table",
+        props: {
+          emptyText: "没有数据啊",
         },
-        {
-          name: "name",
-          label: "姓名",
-        },
-        {
-          name: "address",
-          label: "地址",
-        },
-        {
-          type: "operation",
-          label: "操作",
-          props: {
-            fixed: "right",
-          },
-          actions: [
-            {
-              type: "link",
-              label: "切换二三行选中状态",
-              props: {
-                type: "primary",
-              },
-              click: () => {
-                this.toggleSelection([this.tableData[1], this.tableData[2]]);
-              },
+        body: [
+          { type: "selection" },
+          {
+            name: "date",
+            label: "日期",
+            props: {
+              sortable: true,
             },
-            {
-              type: "link",
-              label: "编辑",
-              props: {
-                type: "primary",
-              },
-              click: (row) => {
-                console.log(row);
-              },
+          },
+          {
+            name: "name",
+            label: "姓名",
+          },
+          {
+            name: "address",
+            label: "地址",
+          },
+          {
+            type: "operation",
+            label: "操作",
+            props: {
+              fixed: "right",
             },
-          ],
-        },
-      ],
+            actions: [
+              {
+                type: "link",
+                label: "切换二三行选中状态",
+                props: {
+                  type: "primary",
+                },
+                click: () => {
+                  this.toggleSelection([this.tableData[1], this.tableData[2]]);
+                },
+              },
+              {
+                type: "link",
+                label: "编辑",
+                props: {
+                  type: "primary",
+                },
+                click: (row) => {
+                  console.log(row);
+                },
+              },
+            ],
+          },
+        ],
+      },
       formSchema: [
         {
           type: "input",

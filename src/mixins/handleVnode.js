@@ -16,7 +16,7 @@ export default {
         ...currentEvent,
         ...fromUserEvent,
       };
-
+      
       vnode.componentOptions.propsData = {
         ...vnodeProps,
         ...otherBLMProps,

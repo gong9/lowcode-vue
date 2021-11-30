@@ -2,6 +2,13 @@
 
 > 对于 toB 的一些组件改造为 lowcode 的方式
 
+一些规范：
+- 对于封装好的lowcode相关的组件要确定一些属性需要放到组件上还是组件的配置中
+
+一些约定 lowcode-x 相关的组件
+属性仅仅接受 schema dataSourceName ref
+
+如果想给其代理的element组件传值，则需要放到schema中。
 ## lowcode-form
 未完成
 ## lowcode-form-search

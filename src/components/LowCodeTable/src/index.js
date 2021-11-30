@@ -12,8 +12,8 @@ export default {
       default: () => [],
     },
     schema: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => {},
     },
   },
   data: function () {
@@ -69,8 +69,8 @@ export default {
      * 渲染 el-table-column
      * @returns all el-table-column vnode
      */
-    renderTableColumn() {
-      return this.schema.map((col) => {
+    renderTableColumn(body) {
+      return body.map((col) => {
         const { name, label, props = {}, type } = col;
 
         if (!type && (!name || !label)) {
@@ -102,8 +102,8 @@ export default {
 
     /**
      * 单个操作控件渲染
-     * @param {*} action内的属性
-     * @param {*} row
+     * @param {object} action action的属性
+     * @param {object} row 当前行数据
      * @returns 单个操作控件vnode
      */
     renderOperationItem({ type, click, label, hide, props = {} }, row) {
@@ -136,15 +136,20 @@ export default {
     this.tableRef = this.$refs.table;
   },
   render: function (h) {
-    return (
-      <div>
-        {/* blm-table js控制选中行时存在bug 未支持相关方法 */}
-        {this.handleVnodeProp(
-          <el-table ref="table" data={this.data}>
-            {this.renderTableColumn()}
-          </el-table>
-        )}
-      </div>
-    );
+    const { type, body, props } = this.schema;
+    if (type && type === "table")
+      return (
+        <div>
+          {/* blm-table js控制选中行时存在bug 未支持相关方法 */}
+          {this.handleColVnode(
+            this.handleVnodeProp(
+              <el-table ref="table" data={this.data}>
+                {this.renderTableColumn(body)}
+              </el-table>
+            ),
+            props
+          )}
+        </div>
+      );
   },
 };
