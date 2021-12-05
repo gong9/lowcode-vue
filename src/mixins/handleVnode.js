@@ -1,13 +1,14 @@
 export default {
   methods: {
     /**
-     * 将使用方的属性和事件重新注入blmtable
+     * 将使用方的属性和事件或自定义props、events重新注入此vnode
      * @param {*} vnode
      * @returns vnode
      */
-    handleVnodeProp(vnode) {
-      const fromUserEvent = this._events; // event
-      const otherBLMProps = this.$attrs; // props
+    handleVnodeProp(vnode, custom = {}) {
+      const { props, events } = custom;
+      const fromUserEvent = events ? events : this._events; // event
+      const otherBLMProps = props ? props : this.$attrs; // props
 
       const currentEvent = vnode.componentOptions.listeners;
       const vnodeProps = vnode.componentOptions.propsData;
@@ -16,7 +17,7 @@ export default {
         ...currentEvent,
         ...fromUserEvent,
       };
-      
+
       vnode.componentOptions.propsData = {
         ...vnodeProps,
         ...otherBLMProps,

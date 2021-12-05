@@ -1,15 +1,12 @@
 <template>
   <div id="app">
     <div>
-      <h3>基础表单项配置化</h3>
       <FormItemDemo />
     </div>
     <div>
-      <h3>表单配置化</h3>
       <FormDemo />
     </div>
     <div>
-      <h3>表格&搜索表单配置化</h3>
       <TableDemo />
     </div>
   </div>

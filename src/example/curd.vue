@@ -1,13 +1,11 @@
 <template>
   <div>
+    {{ formData }}
     <lowcode-form-search
       :schema="formSchema"
       dataSourceName="formData"
       maxLine="1"
     >
-      <template v-slot:city>
-        <City />
-      </template>
     </lowcode-form-search>
     <lowcode-table
       ref="multipleTable"
@@ -25,7 +23,7 @@ import City from "./custom/City.vue";
 export default {
   name: "App",
   components: {
-    City,
+    // City,
   },
   computed: {
     pagination() {
@@ -99,6 +97,14 @@ export default {
           name: "name",
         },
         {
+          type: "select-city",
+          name: "city",
+          label: "我是自定义组件",
+          render: () => {
+            return <City />;
+          },
+        },
+        {
           type: "input",
           label: "年龄",
           name: "age",
@@ -170,6 +176,7 @@ export default {
         name: "111",
         age: "19",
         grade: "",
+        city: 11,
         time: [
           moment().subtract(30, "days").startOf("day").valueOf(),
           moment().endOf("day").milliseconds(0).valueOf(),

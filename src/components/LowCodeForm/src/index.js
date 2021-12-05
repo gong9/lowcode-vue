@@ -25,19 +25,40 @@ export default {
     };
   },
   methods: {
+    /**
+     * 渲染全部表单项
+     * @param {array} schema
+     * @returns
+     */
     renderAllFormItem(schema) {
       return schema.map((formItemSchema) => {
         return this.renderFormItem(formItemSchema);
       });
     },
+
+    /**
+     * 判断是否渲染某一表单项
+     * @param {array} handles
+     */
+    isRenderNode(handles) {
+      if (Array.isArray(handles)) {
+        handles.map((handle) => {
+          if (typeof handle === "function") return handle.call();
+          if (typeof handle === "boolean") return handle;
+        });
+      }
+    },
+
+    /**
+     * 渲染具体表单项
+     * @param {object} formItemSchema
+     * @return vnode
+     */
     renderFormItem(formItemSchema) {
       const { dataSourceName } = this.$attrs;
       const { label, name, type, visible, disabled } = formItemSchema;
 
-      if (typeof visible === "function") {
-        if (!visible.call()) return null;
-      }
-      if (typeof visible === "boolean") if (!visible) return null;
+      // this.isRenderNode([visible, disabled]);
 
       let formItemVnode = null;
       switch (type) {
@@ -77,26 +98,6 @@ export default {
       );
     },
     renderDatePicker() {},
-    renderSwitch(formItemSchema, dataSourceName) {
-      const { name, label } = formItemSchema;
-      return (
-        <el-switch vModel={this.$parent[dataSourceName][name]}></el-switch>
-      );
-    },
-    renderCheckbox(formItemSchema, dataSourceName) {
-      const { label, name, options = [] } = formItemSchema;
-      return (
-        <el-checkbox-group vModel={this.$parent[dataSourceName][name]}>
-          {this.renderCheckboxItem(options)}
-        </el-checkbox-group>
-      );
-    },
-    renderCheckboxItem(allCheckbox) {
-      return allCheckbox.map((checkboc) => {
-        const { label, value } = checkboc;
-        return <el-checkbox label={label} value={value}></el-checkbox>;
-      });
-    },
     renderRadio(formItemSchema, dataSourceName) {
       const { name, label, options } = formItemSchema;
       return (

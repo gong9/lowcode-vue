@@ -2,6 +2,7 @@ import InputRender from "./formItemRender/input";
 import SelectRender from "./formItemRender/select";
 import SwitchRender from "./formItemRender/switch";
 import CheckBoxRender from "./formItemRender/checkbox";
+import RadioRender from "./formItemRender/radio";
 
 export default {
   name: "lowcode-form-item",
@@ -40,6 +41,13 @@ export default {
         )}
         {type === "checkbox" && (
           <CheckBoxRender
+            schema={this.schema}
+            ctx={this.ctx || this}
+            createEle={h}
+          />
+        )}
+        {type === "radio" && (
+          <RadioRender
             schema={this.schema}
             ctx={this.ctx || this}
             createEle={h}

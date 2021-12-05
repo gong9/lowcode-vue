@@ -1,3 +1,23 @@
 <template>
-  <div>我是用户局部注册的自定义组件</div>
+  <div>
+    <el-button @click="handelVal">{{ value }}</el-button>
+  </div>
 </template>
+<script>
+import handleCostomMixins from "../../mixins/custom";
+export default {
+  data() {
+    return {
+      value: "",
+    };
+  },
+  mixins: [handleCostomMixins],
+  methods: {
+    handelVal() {
+      this.value += 1;
+    },
+  },
+};
+</script>
+
+<style scoped></style>

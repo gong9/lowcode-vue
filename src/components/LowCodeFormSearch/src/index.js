@@ -44,6 +44,7 @@ export default {
         options = [],
         body = [],
         props = {},
+        render,
       } = formItemSchema;
       const { dataSourceName } = this.$attrs;
 
@@ -90,7 +91,7 @@ export default {
         case "actions":
           return <template slot="moreBtn">{this.renderActions(body)}</template>;
         default:
-          if (Vue.component(type) || this.$slots[type]) {
+          if (Vue.component(type) || (render && typeof render === "function")) {
             const customType = Vue.component(type) ? 1 : 2;
             return this.renderCustomComp(customType, formItemSchema);
           }
@@ -106,13 +107,19 @@ export default {
      * @returns 自定义组件的vnode
      */
     renderCustomComp(customType, formItemSchema) {
-      const { type, label, name } = formItemSchema;
+      const { type, label, name, render } = formItemSchema;
+      const { dataSourceName } = this.$attrs;
       // 处理全局注册的
       if (customType === 1) {
         const CustomComp = Vue.component(type);
         return (
           <el-form-item label={label} prop={name}>
-            <CustomComp />
+            <CustomComp
+              value={this.$parent[dataSourceName][name]}
+              on-custom-comp={(val) => {
+                this.$parent[dataSourceName][name] = val;
+              }}
+            />
           </el-form-item>
         );
       }
@@ -120,7 +127,16 @@ export default {
       if (customType === 2) {
         return (
           <el-form-item label={label} prop={name}>
-            {this.$slots[type]}
+            {this.handleVnodeProp(render.call(this.$parent), {
+              props: {
+                defaultValue: this.$parent[dataSourceName][name],
+              },
+              events: {
+                "custom-comp": (val) => {
+                  this.$parent[dataSourceName][name] = val;
+                },
+              },
+            })}
           </el-form-item>
         );
       }

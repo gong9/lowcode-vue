@@ -3,14 +3,18 @@
 > 对于 toB 的一些组件改造为 lowcode 的方式
 
 一些规范：
-- 对于封装好的lowcode相关的组件要确定一些属性需要放到组件上还是组件的配置中
+
+- 对于封装好的 lowcode 相关的组件要确定一些属性需要放到组件上还是组件的配置中
 
 一些约定 lowcode-x 相关的组件
 属性仅仅接受 schema dataSourceName ref
 
-如果想给其代理的element组件传值，则需要放到schema中。
+如果想给其代理的 element 组件传值，则需要放到 schema 中。
+
 ## lowcode-form
+
 未完成
+
 ## lowcode-form-search
 
 一般与 table 配合使用的表单搜索组件
@@ -56,7 +60,9 @@ formSchema 内属性接受
      }
 
 ```
-### 一些lowcode-form-search具体的表单项
+
+### 一些 lowcode-form-search 具体的表单项
+
 #### 1.下拉框
 
 ```js
@@ -374,3 +380,5 @@ tableSchema: [
         },
       ],
 ```
+
+
