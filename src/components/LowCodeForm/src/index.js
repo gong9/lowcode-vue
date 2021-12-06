@@ -7,11 +7,8 @@ export default {
   name: "lowcode-form",
   mixins: [handleVnode],
   props: {
-    data: {
-      type: Object,
-    },
     schema: {
-      type: Array,
+      type: Object,
     },
     rules: {
       type: Object,
@@ -131,12 +128,16 @@ export default {
     this.form = this.$refs.form;
   },
   render: function (h) {
+    const { props = {}, body } = this.schema;
     return (
       <div>
         {this.handleVnodeProp(
-          <el-form rules={this.rules} ref="form" label-width="80px">
-            {this.renderAllFormItem(this.schema)}
-          </el-form>
+          this.handleInjectPorps(
+            <el-form rules={this.rules} ref="form">
+              {this.renderAllFormItem(body)}
+            </el-form>,
+            props
+          )
         )}
       </div>
     );

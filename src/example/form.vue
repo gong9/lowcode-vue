@@ -24,115 +24,120 @@ export default {
         resource: 1,
         desc: "",
       },
-      formSchema: [
-        {
-          type: "input",
-          name: "name",
-          label: "活动名称",
+      formSchema: {
+        type: "form",
+        props: {
+          labelWidth: "100px",
         },
-        {
-          type: "select",
-          name: "region",
-          label: "活动区域",
-          options: [
-            {
-              label: "区域1",
-              value: 1,
-            },
-            {
-              label: "区域2",
-              value: 2,
-            },
-          ],
-        },
-        {
-          type: "date",
-          name: "data",
-          label: "活动时间",
-        },
-        {
-          type: "switch",
-          name: "delivery",
-          label: "即时配送",
-        },
-        {
-          type: "checkbox",
-          name: "type",
-          label: "活动性质",
-          visible: () => {
-            return this.form.delivery === true;
+        body: [
+          {
+            type: "input",
+            name: "name",
+            label: "活动名称",
           },
-          options: [
-            {
-              label: "美食/餐厅线上活动",
-              name: "type",
-            },
-            {
-              label: "地推活动",
-              name: "type",
-            },
-            {
-              label: "线下主题活动",
-              name: "type",
-            },
-            {
-              label: "单纯品牌曝光",
-              name: "type",
-            },
-          ],
-        },
-        {
-          type: "radio",
-          name: "resource",
-          label: "特殊资源",
-          options: [
-            {
-              label: "选项1",
-              value: 1,
-            },
-            {
-              label: "选项2",
-              value: 2,
-            },
-          ],
-        },
-        {
-          type: "textarea",
-          name: "desc",
-          label: "活动形式",
-          // 优化代码，逻辑暂时没处理
-          disabled: () => {
-            return this.form.resource === 1;
+          {
+            type: "select",
+            name: "region",
+            label: "活动区域",
+            options: [
+              {
+                label: "区域1",
+                value: 1,
+              },
+              {
+                label: "区域2",
+                value: 2,
+              },
+            ],
           },
-        },
-        {
-          type: "actions",
-          body: [
-            {
-              type: "button",
-              label: "提交",
-              click: () => {
-                // 提交逻辑
-                this.$refs.ruleForm.form.validate((valid) => {
-                  if (valid) {
-                    alert("submit!");
-                  } else {
-                    console.log("error submit!!");
-                    return false;
-                  }
-                });
-              },
+          {
+            type: "date",
+            name: "data",
+            label: "活动时间",
+          },
+          {
+            type: "switch",
+            name: "delivery",
+            label: "即时配送",
+          },
+          {
+            type: "checkbox",
+            name: "type",
+            label: "活动性质",
+            visible: () => {
+              return this.form.delivery === true;
             },
-            {
-              type: "button",
-              label: "取消",
-              click: () => {
-                // 具体逻辑
+            options: [
+              {
+                label: "美食/餐厅线上活动",
+                name: "type",
               },
+              {
+                label: "地推活动",
+                name: "type",
+              },
+              {
+                label: "线下主题活动",
+                name: "type",
+              },
+              {
+                label: "单纯品牌曝光",
+                name: "type",
+              },
+            ],
+          },
+          {
+            type: "radio",
+            name: "resource",
+            label: "特殊资源",
+            options: [
+              {
+                label: "选项1",
+                value: 1,
+              },
+              {
+                label: "选项2",
+                value: 2,
+              },
+            ],
+          },
+          {
+            type: "textarea",
+            name: "desc",
+            label: "活动形式",
+            disabled: () => {
+              return this.form.resource === 1;
             },
-          ],
-        },
-      ],
+          },
+          {
+            type: "actions",
+            body: [
+              {
+                type: "button",
+                label: "提交",
+                click: () => {
+                  // 提交逻辑
+                  this.$refs.ruleForm.form.validate((valid) => {
+                    if (valid) {
+                      alert("submit!");
+                    } else {
+                      console.log("error submit!!");
+                      return false;
+                    }
+                  });
+                },
+              },
+              {
+                type: "button",
+                label: "取消",
+                click: () => {
+                  // 具体逻辑
+                },
+              },
+            ],
+          },
+        ],
+      },
       rules: {
         name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },

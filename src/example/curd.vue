@@ -18,9 +18,6 @@ import City from "./custom/City.vue";
 
 export default {
   name: "App",
-  components: {
-    // City,
-  },
   computed: {
     pagination() {
       return {
@@ -145,12 +142,6 @@ export default {
                 value: 3,
               },
             ],
-          },
-          // 用户自定的局部注册组件，目前需要借助一些插槽
-          {
-            type: "city",
-            label: "选择城市",
-            name: "grade",
           },
           {
             type: "actions",

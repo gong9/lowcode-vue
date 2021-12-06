@@ -27,8 +27,8 @@ export default {
 
     /**
      * 向vnode中注入prop
-     * @param {*} vnode
-     * @param {*} props
+     * @param {object} vnode
+     * @param {object} props
      * @returns vnode
      */
     handleInjectPorps(vnode, props) {
