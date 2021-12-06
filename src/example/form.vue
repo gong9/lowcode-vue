@@ -90,6 +90,9 @@ export default {
             type: "radio",
             name: "resource",
             label: "特殊资源",
+            disabled: () => {
+              return this.delivery;
+            },
             options: [
               {
                 label: "选项1",

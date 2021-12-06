@@ -76,7 +76,7 @@ export default {
                   type: "primary",
                 },
                 click: (row) => {
-                  console.log(row);
+                  // 编辑逻辑
                 },
               },
             ],
@@ -150,7 +150,6 @@ export default {
                 type: "button",
                 label: "搜索",
                 click: () => {
-                  console.log(this.formData);
                   // 搜索逻辑
                 },
               },

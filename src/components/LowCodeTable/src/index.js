@@ -1,5 +1,5 @@
 /**
- * @file 表格组件封装
+ * @file 表格组件
  */
 
 import handleVnode from "../../../mixins/handleVnode";

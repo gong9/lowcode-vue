@@ -2,7 +2,7 @@ export default {
   methods: {
     /**
      * 将使用方的属性和事件或自定义props、events重新注入此vnode
-     * @param {*} vnode
+     * @param {object} vnode
      * @returns vnode
      */
     handleVnodeProp(vnode, custom = {}) {

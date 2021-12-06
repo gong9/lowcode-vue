@@ -1,5 +1,5 @@
 /**
- * @file 表单组件封装
+ * @file 表单组件
  */
 
 import handleVnode from "../../../mixins/handleVnode";
@@ -53,7 +53,9 @@ export default {
       const { dataSourceName } = this.$attrs;
       const { label, name, type, visible, disabled } = formItemSchema;
 
-      // this.isRenderNode([visible, disabled]);
+      if (visible || disabled) {
+        this.isRenderNode([visible, disabled]);
+      }
 
       let formItemVnode = null;
       switch (type) {
@@ -86,10 +88,14 @@ export default {
         )
       );
     },
-    renderDatePicker() {},
+
+    /**
+     * 渲染all行为组件
+     * @param {object} formItemSchema
+     * @returns vnode
+     */
     renderActions(formItemSchema) {
       const { body } = formItemSchema;
-
       if (body && Array.isArray(body)) {
         return (
           <el-form-item>
@@ -100,16 +106,27 @@ export default {
         );
       }
     },
+
+    /**
+     * 根据行为组件type 分发不同渲染逻辑
+     * @param {object} formItemSchema
+     * @returns vnode
+     */
     renderAction(action) {
       const { type } = action;
       switch (type) {
         case "button":
           return this.renderBtn(action);
-
         default:
           break;
       }
     },
+
+    /**
+     * 渲染按钮
+     * @param {object} action
+     * @returns btn vnode
+     */
     renderBtn(action) {
       const { label, click = () => {} } = action;
       return (
