@@ -31,7 +31,7 @@ export default {
      * @param {*} props
      * @returns vnode
      */
-    handleColVnode(vnode, props) {
+    handleInjectPorps(vnode, props) {
       const vnodeProps = vnode.componentOptions.propsData;
       vnode.componentOptions.propsData = {
         ...vnodeProps,

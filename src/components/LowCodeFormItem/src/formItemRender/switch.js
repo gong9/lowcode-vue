@@ -1,4 +1,4 @@
-import { handleColVnode } from "../../../../util/tool";
+import { handleInjectPorps } from "../../../../util/tool";
 
 export default (renderContext) => {
   const {
@@ -6,7 +6,7 @@ export default (renderContext) => {
   } = renderContext;
   const { name, props } = schema;
   const { dataSourceName } = ctx.$attrs;
-  return handleColVnode(
+  return handleInjectPorps(
     <el-switch
       value={ctx.$parent[dataSourceName][name]}
       onChange={(value) => {

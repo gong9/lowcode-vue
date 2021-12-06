@@ -1,11 +1,7 @@
 <template>
   <div>
     {{ formData }}
-    <lowcode-form-search
-      :schema="formSchema"
-      dataSourceName="formData"
-      maxLine="1"
-    >
+    <lowcode-form-search :schema="formSchema" dataSourceName="formData">
     </lowcode-form-search>
     <lowcode-table
       ref="multipleTable"
@@ -90,88 +86,94 @@ export default {
           },
         ],
       },
-      formSchema: [
-        {
-          type: "input",
-          label: "姓名",
-          name: "name",
+      formSchema: {
+        type: "form-search",
+        props: {
+          maxLine: "1",
         },
-        {
-          type: "select-city",
-          name: "city",
-          label: "我是自定义组件",
-          render: () => {
-            return <City />;
+        body: [
+          {
+            type: "input",
+            label: "姓名",
+            name: "name",
           },
-        },
-        {
-          type: "input",
-          label: "年龄",
-          name: "age",
-        },
-        {
-          type: "input",
-          label: "班级",
-          name: "grade",
-        },
-        {
-          type: "input-time",
-          label: "选择时间",
-          name: "time",
-          props: {
-            type: "daterange",
-            defaultTime: ["00:00:00", "23:59:59"],
-            placeholder: "选择日期",
-            style: "width: 100%;",
+          {
+            type: "select-city",
+            name: "city",
+            label: "我是自定义组件",
+            render: () => {
+              return <City />;
+            },
           },
-        },
-        {
-          type: "select-sc",
-          label: "单选下拉框",
-          name: "select01",
-          // placeholder: "自定义",
-          options: [
-            {
-              label: "选项1",
-              value: 1,
+          {
+            type: "input",
+            label: "年龄",
+            name: "age",
+          },
+          {
+            type: "input",
+            label: "班级",
+            name: "grade",
+          },
+          {
+            type: "input-time",
+            label: "选择时间",
+            name: "time",
+            props: {
+              type: "daterange",
+              defaultTime: ["00:00:00", "23:59:59"],
+              placeholder: "选择日期",
+              style: "width: 100%;",
             },
-            {
-              label: "选项2",
-              value: 2,
-            },
-            {
-              label: "选项3",
-              value: 3,
-            },
-          ],
-        },
-        // 用户自定的局部注册组件，目前需要借助一些插槽
-        {
-          type: "city",
-          label: "选择城市",
-          name: "grade",
-        },
-        {
-          type: "actions",
-          body: [
-            {
-              type: "button",
-              label: "搜索",
-              click: () => {
-                console.log(this.formData);
-                // 搜索逻辑
+          },
+          {
+            type: "select",
+            label: "单选下拉框",
+            name: "select01",
+            placeholder: "自定义",
+            options: [
+              {
+                label: "选项1",
+                value: 1,
               },
-            },
-            {
-              type: "link",
-              label: "查询导出结果",
-              click: () => {
-                // 具体导出逻辑
+              {
+                label: "选项2",
+                value: 2,
               },
-            },
-          ],
-        },
-      ],
+              {
+                label: "选项3",
+                value: 3,
+              },
+            ],
+          },
+          // 用户自定的局部注册组件，目前需要借助一些插槽
+          {
+            type: "city",
+            label: "选择城市",
+            name: "grade",
+          },
+          {
+            type: "actions",
+            body: [
+              {
+                type: "button",
+                label: "搜索",
+                click: () => {
+                  console.log(this.formData);
+                  // 搜索逻辑
+                },
+              },
+              {
+                type: "link",
+                label: "查询导出结果",
+                click: () => {
+                  // 具体导出逻辑
+                },
+              },
+            ],
+          },
+        ],
+      },
       formData: {
         name: "111",
         age: "19",

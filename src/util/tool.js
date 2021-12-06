@@ -15,7 +15,7 @@ const handleFnToBooler = (schemaItem, ctx) => {
  * @param {*} props
  * @returns vnode
  */
-const handleColVnode = (vnode, props) => {
+const handleInjectPorps = (vnode, props) => {
   const vnodeProps = vnode.componentOptions.propsData;
   vnode.componentOptions.propsData = {
     ...vnodeProps,
@@ -24,4 +24,4 @@ const handleColVnode = (vnode, props) => {
   return vnode;
 };
 
-export { handleFnToBooler, handleColVnode };
+export { handleFnToBooler, handleInjectPorps };

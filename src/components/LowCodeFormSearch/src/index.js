@@ -1,6 +1,6 @@
 /**
  * file: 与表格配合使用的表单搜索组件封装
- * todo 代码待优化
+ * todo 代码待优化 将基础表单项抽离出去
  */
 
 import Vue from "vue";
@@ -10,8 +10,8 @@ export default {
   mixins: [handleVnode],
   props: {
     schema: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => {},
     },
   },
   methods: {
@@ -21,6 +21,8 @@ export default {
      * @returns all form-item vnode
      */
     renderAllFormItem(schema) {
+      if (!Array.isArray(schema)) throw new Error("body属性值需是array类型");
+
       return schema.map((formItemSchema) => {
         const { type, name } = formItemSchema;
         if (type !== "actions" && (!type || !name))
@@ -40,8 +42,6 @@ export default {
         type,
         label,
         name,
-        trim = true,
-        options = [],
         body = [],
         props = {},
         render,
@@ -53,36 +53,16 @@ export default {
 
       switch (type) {
         case "input":
+        case "select":
           return (
             <el-form-item label={label} prop={name}>
-              <el-input
-                value={this.$parent[dataSourceName][name]}
-                on-input={(val) => {
-                  this.$parent[dataSourceName][name] = this.handleInputVal(
-                    val,
-                    { trim }
-                  );
-                }}
-              />
+              <lowcode-form-item schema={formItemSchema} ctx={this} />
             </el-form-item>
           );
-        case "select-sc":
-          return (
-            <el-form-item label={label} prop={name}>
-              <el-select
-                vModel={this.$parent[dataSourceName][name]}
-                placeholder={formItemSchema.placeholder || "请选择"}
-              >
-                {this.renderSelectOptions(options)}
-              </el-select>
-            </el-form-item>
-          );
-        case "select-mc":
-          return null;
         case "input-time":
           return (
             <el-form-item label={label} prop={name}>
-              {this.handleColVnode(
+              {this.handleInjectPorps(
                 <el-date-picker vModel={this.$parent[dataSourceName][name]} />,
                 props
               )}
@@ -91,6 +71,7 @@ export default {
         case "actions":
           return <template slot="moreBtn">{this.renderActions(body)}</template>;
         default:
+          // 处理用户自定义组件
           if (Vue.component(type) || (render && typeof render === "function")) {
             const customType = Vue.component(type) ? 1 : 2;
             return this.renderCustomComp(customType, formItemSchema);
@@ -101,6 +82,7 @@ export default {
     },
 
     /**
+     * todo all lowcode comp sholud need this, so 抽离吧
      * 自定义组件的渲染
      * @customType {*} 自定义组件类型 1 全局注册 2 局部注册
      * @formItemSchema {*} 该表单项的具体schema
@@ -140,33 +122,6 @@ export default {
           </el-form-item>
         );
       }
-    },
-
-    /**
-     * 对于input value值处理，eg 去除空格
-     * todo 后续计划其他
-     * @param {*} val input value
-     * @param {*} param1 对于val的操作方法
-     * @returns val
-     */
-    handleInputVal(val, { trim }) {
-      if (trim) {
-        return val.trim();
-      } else {
-        return val;
-      }
-    },
-
-    /**
-     * select中的字选项渲染
-     * @param {*} options
-     * @returns all options vnode
-     */
-    renderSelectOptions(options) {
-      return options.map((option) => {
-        const { label, value } = option;
-        return <el-option key={value} value={value} label={label} />;
-      });
     },
 
     /**
@@ -238,11 +193,15 @@ export default {
     },
   },
   render: function (h) {
+    const { props, body } = this.schema;
     return (
       <div class="app-main">
         <el-form>
           {this.handleVnodeProp(
-            <BLM-search>{this.renderAllFormItem(this.schema)}</BLM-search>
+            this.handleInjectPorps(
+              <BLM-search>{this.renderAllFormItem(body)}</BLM-search>,
+              props
+            )
           )}
         </el-form>
       </div>

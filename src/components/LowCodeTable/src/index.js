@@ -77,7 +77,7 @@ export default {
           throw new Error("schema 中必须含有name、label属性");
         }
 
-        return this.handleColVnode(
+        return this.handleInjectPorps(
           <el-table-column
             type={type}
             prop={name}
@@ -117,7 +117,7 @@ export default {
 
       switch (type) {
         case "link":
-          return this.handleColVnode(
+          return this.handleInjectPorps(
             <el-link
               onClick={() => {
                 click(row);
@@ -141,7 +141,7 @@ export default {
       return (
         <div>
           {/* blm-table js控制选中行时存在bug 未支持相关方法 */}
-          {this.handleColVnode(
+          {this.handleInjectPorps(
             this.handleVnodeProp(
               <el-table ref="table" data={this.data}>
                 {this.renderTableColumn(body)}
