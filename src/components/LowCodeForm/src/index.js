@@ -1,7 +1,5 @@
 /**
- * file: 表格组件封装
- * todo 思考基础的表单控件需不需要写在此文件中 --都抽出去
- * todo 思考几种常见的组件联动关系 基础联动文件中仅需提供对应显示隐藏、可用不可用逻辑即可
+ * @file 表单组件封装
  */
 
 import handleVnode from "../../../mixins/handleVnode";
@@ -66,6 +64,8 @@ export default {
         case "select":
         case "switch":
         case "checkbox":
+        case "radio":
+        case "textarea":
           formItemVnode = (
             <lowcode-form-item
               schema={formItemSchema}
@@ -73,14 +73,6 @@ export default {
               ctx={this}
             />
           );
-          break;
-        case "date":
-          return null;
-        case "radio":
-          formItemVnode = this.renderRadio(formItemSchema, dataSourceName);
-          break;
-        case "textarea":
-          formItemVnode = this.renderTextarea(formItemSchema, dataSourceName);
           break;
         case "actions":
           formItemVnode = this.renderActions(formItemSchema);
@@ -98,29 +90,6 @@ export default {
       );
     },
     renderDatePicker() {},
-    renderRadio(formItemSchema, dataSourceName) {
-      const { name, label, options } = formItemSchema;
-      return (
-        <el-radio-group vModel={this.$parent[dataSourceName][name]}>
-          {this.renderRadioItem(options)}
-        </el-radio-group>
-      );
-    },
-    renderRadioItem(options) {
-      return options.map((radio) => {
-        const { label } = radio;
-        return <el-radio label={label}></el-radio>;
-      });
-    },
-    renderTextarea(formItemSchema, dataSourceName) {
-      const { name, label } = formItemSchema;
-      return (
-        <el-input
-          type="textarea"
-          vModel={this.$parent[dataSourceName][name]}
-        ></el-input>
-      );
-    },
     renderActions(formItemSchema) {
       const { body } = formItemSchema;
 

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="form">
+    {{ form }}
     <lowcode-form
       :model="form"
       :schema="formSchema"
@@ -20,7 +21,7 @@ export default {
         date: "",
         delivery: false,
         type: [],
-        resource: "",
+        resource: 1,
         desc: "",
       },
       formSchema: [
@@ -86,10 +87,12 @@ export default {
           label: "特殊资源",
           options: [
             {
-              label: 1,
+              label: "选项1",
+              value: 1,
             },
             {
-              label: 2,
+              label: "选项2",
+              value: 2,
             },
           ],
         },
@@ -155,3 +158,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.form {
+  width: 500px;
+}
+</style>

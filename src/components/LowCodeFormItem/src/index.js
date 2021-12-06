@@ -3,6 +3,7 @@ import SelectRender from "./formItemRender/select";
 import SwitchRender from "./formItemRender/switch";
 import CheckBoxRender from "./formItemRender/checkbox";
 import RadioRender from "./formItemRender/radio";
+import TextAreaRender from "./formItemRender/textArea";
 
 export default {
   name: "lowcode-form-item",
@@ -48,6 +49,13 @@ export default {
         )}
         {type === "radio" && (
           <RadioRender
+            schema={this.schema}
+            ctx={this.ctx || this}
+            createEle={h}
+          />
+        )}
+        {type === "textarea" && (
+          <TextAreaRender
             schema={this.schema}
             ctx={this.ctx || this}
             createEle={h}
