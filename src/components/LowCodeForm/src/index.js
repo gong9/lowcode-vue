@@ -26,8 +26,8 @@ export default {
      * @returns
      */
     renderAllFormItem(schema) {
-      return schema.map((formItemSchema) => {
-        return this.renderFormItem(formItemSchema);
+      return schema.map((formItemSchema, index) => {
+        return this.renderFormItem(formItemSchema, index);
       });
     },
 
@@ -35,13 +35,21 @@ export default {
      * 判断是否渲染某一表单项
      * @param {array} handles
      */
-    isRenderNode(handles) {
-      if (Array.isArray(handles)) {
-        handles.map((handle) => {
-          if (typeof handle === "function") return handle.call();
-          if (typeof handle === "boolean") return handle;
-        });
-      }
+    isRenderNode(handleFn) {
+      if (typeof handleFn !== "function")
+        throw new Error("disabled配置项需是一个函数");
+      return handleFn.call(this.$parent);
+    },
+
+    /**
+     * 当前控件是否可用
+     * @param {function} handleFn
+     * @returns boolear
+     */
+    isDisabled(handleFn) {
+      if (typeof handleFn !== "function")
+        throw new Error("visible配置项需是一个函数");
+      return handleFn.call(this.$parent);
     },
 
     /**
@@ -49,15 +57,18 @@ export default {
      * @param {object} formItemSchema
      * @return vnode
      */
-    renderFormItem(formItemSchema) {
+    renderFormItem(formItemSchema, index) {
       const { dataSourceName } = this.$attrs;
       const { label, name, type, visible, disabled } = formItemSchema;
 
-      if (visible || disabled) {
-        this.isRenderNode([visible, disabled]);
-      }
-
+      const configProps = {
+        disabled: disabled ? this.isDisabled(disabled) : false,
+      };
       let formItemVnode = null;
+
+      if (visible && !this.isRenderNode(visible)) {
+        return null;
+      }
       switch (type) {
         case "input":
         case "select":
@@ -70,6 +81,7 @@ export default {
               schema={formItemSchema}
               dataSourceName={dataSourceName}
               ctx={this}
+              configProps={{ ...configProps }}
             />
           );
           break;
@@ -80,13 +92,11 @@ export default {
           formItemVnode = null;
           break;
       }
-      return (
-        formItemVnode && (
-          <el-form-item label={label} prop={name}>
-            {formItemVnode}
-          </el-form-item>
-        )
-      );
+      return formItemVnode ? (
+        <el-form-item label={label} prop={name} key={index}>
+          {formItemVnode}
+        </el-form-item>
+      ) : null;
     },
 
     /**

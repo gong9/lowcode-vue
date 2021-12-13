@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <div>
-      <FormItemDemo />
+      <!-- <FormItemDemo /> -->
     </div>
     <div>
       <FormDemo />
     </div>
     <div>
-      <TableDemo />
+      <!-- <TableDemo /> -->
     </div>
   </div>
 </template>
@@ -20,9 +20,9 @@ import FormItemDemo from "./example/formItem.vue";
 export default {
   name: "App",
   components: {
-    TableDemo,
+    // TableDemo,
     FormDemo,
-    FormItemDemo,
+    // FormItemDemo,
   },
 };
 </script>

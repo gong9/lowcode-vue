@@ -14,6 +14,9 @@ export default {
     ctx: {
       type: Object,
     },
+    configProps: {
+      type: Object,
+    },
   },
   render: function (h) {
     const { type } = this.schema;
