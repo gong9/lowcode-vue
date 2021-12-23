@@ -9679,7 +9679,7 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress@1.8.2, vuepress@^1.8.2:
+vuepress@1.8.2:
   version "1.8.2"
   resolved "http://npm.bailongma-inc.com/vuepress/-/vuepress-1.8.2.tgz#97e8bf979630611fc7b621fc4cc35b798ee5e847"
   integrity sha1-l+i/l5YwYR/HtiH8TMNbeY7l6Ec=

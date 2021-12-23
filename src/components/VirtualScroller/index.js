@@ -10,10 +10,10 @@ export default {
   },
   data() {
     return {
-      screenHeight: 0,
-      startOffset: 0,
-      startIndex: 0,
-      endIndex: 0,
+      screenHeight: 0, // 容器可视区高度
+      startOffset: 0, // 可视渲染区距上高度
+      startIndex: 0, // 可视区数据相对于总数据的startIndex
+      endIndex: 0, // 可视区数据相对于总数据的endIndex
     };
   },
   computed: {
@@ -30,11 +30,12 @@ export default {
       );
     },
 
-    /** totalHigth */
+    /** 计算总高度 */
     getTotalHigth() {
       return this.data.length * this.dataItemHeight;
     },
 
+    /** 可视渲染区距上偏移量 */
     visibleOffsetBottom() {
       return `translate3d(0,${this.startOffset}px,0)`;
     },

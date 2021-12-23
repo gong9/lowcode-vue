@@ -24,4 +24,16 @@ const handleInjectPorps = (vnode, props) => {
   return vnode;
 };
 
-export { handleFnToBooler, handleInjectPorps };
+// 节流--时间戳版本
+const throttle = (func, delay = 20) => {
+  let prev = 0;
+  return function (...arg) {
+    let now = Date.now();
+    if (now - prev > delay) {
+      func.apply(this, arg);
+      prev = now;
+    }
+  };
+};
+
+export { handleFnToBooler, handleInjectPorps, throttle };
